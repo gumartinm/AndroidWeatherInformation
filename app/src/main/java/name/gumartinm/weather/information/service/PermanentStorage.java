@@ -105,11 +105,7 @@ public class PermanentStorage {
 
         final String fileName = MessageFormat.format(WIDGET_CURRENT_DATA_FILE, appWidgetId);
 
-        try {
-            this.removeFile(fileName);
-        } catch (final IOException e) {
-            Log.e(TAG, "removeWidgetCurrentData exception: ", e);
-        }
+        this.removeFile(fileName);
     }
 
     public void saveForecast(final Forecast forecast) {
@@ -192,13 +188,11 @@ public class PermanentStorage {
         }
     }
 
-    private void removeFile(final String fileName) throws IOException {
+    private void removeFile(final String fileName) {
         final File filesDir = this.context.getFilesDir();
         final File file = new File(filesDir, fileName);
 
-        if (!file.delete()) {
-            throw new IOException("PermanentStorage, remove file error");
-        }
+        file.delete();
     }
 }
 

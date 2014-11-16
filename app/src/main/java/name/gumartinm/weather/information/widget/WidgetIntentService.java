@@ -33,12 +33,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Date;
 import java.util.Locale;
 
 public class WidgetIntentService extends IntentService {
 	private static final String TAG = "WidgetIntentService";
-    private static final long UPDATE_TIME_RATE = 86400000L;
 
 	public WidgetIntentService() {
 		super("WIS-Thread");
@@ -51,7 +49,7 @@ public class WidgetIntentService extends IntentService {
 		final boolean isRefreshAppWidget = intent.getBooleanExtra("refreshAppWidget", false);
 
 		if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
-			// Nothing to do. Something went wrong. Show error.
+			// Nothing to do. Something went wrong.
 			return;
 		}
 
@@ -62,6 +60,10 @@ public class WidgetIntentService extends IntentService {
 		if (weatherLocation == null) {
 			// Nothing to do. Show error.
 			final RemoteViews view = this.makeErrorView(appWidgetId);
+
+            final PermanentStorage store = new PermanentStorage(this.getApplicationContext());
+            store.removeWidgetCurrentData(appWidgetId);
+
 			this.updateWidget(view, appWidgetId);
 			return;
 		}
@@ -78,21 +80,25 @@ public class WidgetIntentService extends IntentService {
             } else {
                 // Show error.
                 view = this.makeErrorView(appWidgetId);
+
+                store.removeWidgetCurrentData(appWidgetId);
             }
             this.updateWidget(view, appWidgetId);
 		} else {
             RemoteViews view;
 
+            final PermanentStorage store = new PermanentStorage(this.getApplicationContext());
             final Current current = this.getRemoteCurrent(weatherLocation);
             if (current != null) {
                 // Update UI.
                 view = this.makeView(current, weatherLocation, appWidgetId);
 
-                final PermanentStorage store = new PermanentStorage(this.getApplicationContext());
                 store.saveWidgetCurrentData(current, appWidgetId);
             } else {
                 // Show error.
                 view = this.makeErrorView(appWidgetId);
+
+                store.removeWidgetCurrentData(appWidgetId);
             }
             this.updateWidget(view, appWidgetId);
 		}
