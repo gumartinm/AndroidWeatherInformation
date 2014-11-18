@@ -18,7 +18,6 @@ package name.gumartinm.weather.information.activity;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -115,21 +114,15 @@ public class MainTabsActivity extends FragmentActivity {
         Intent intent;
         final int itemId = item.getItemId();
         if (itemId == R.id.weather_menu_settings) {
-            intent = new Intent("name.gumartinm.weather.information.WEATHERINFO")
-            .setComponent(new ComponentName("name.gumartinm.weather.information",
-                    "name.gumartinm.weather.information.activity.PreferencesActivity"));
+            intent = new Intent(this.getApplicationContext(), PreferencesActivity.class);
             this.startActivity(intent);
             return true;
         } else if (itemId == R.id.weather_menu_map) {
-            intent = new Intent("name.gumartinm.weather.information.WEATHERINFO").
-            		setComponent(new ComponentName("name.gumartinm.weather.information",
-            				"name.gumartinm.weather.information.activity.MapActivity"));
+            intent = new Intent(this.getApplicationContext(), MapActivity.class);
             this.startActivity(intent);
             return true;
         } else if (itemId == R.id.weather_menu_about) {
-            intent = new Intent("name.gumartinm.weather.information.WEATHERINFO").
-                    setComponent(new ComponentName("name.gumartinm.weather.information",
-                            "name.gumartinm.weather.information.activity.AboutActivity"));
+            intent = new Intent(this.getApplicationContext(), AboutActivity.class);
             this.startActivity(intent);
             return true;
         } else {

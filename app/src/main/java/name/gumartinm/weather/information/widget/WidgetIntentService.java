@@ -323,11 +323,4 @@ public class WidgetIntentService extends IntentService {
 		final AppWidgetManager manager = AppWidgetManager.getInstance(this.getApplicationContext());
 		manager.updateAppWidget(appWidgetId, remoteView);
 	}
-	
-//	private void updateWidgets(final RemoteViews remoteView) {
-//		
-//		final ComponentName widgets = new ComponentName(this.getApplicationContext(), WidgetProvider.class);
-//		final AppWidgetManager manager = AppWidgetManager.getInstance(this.getApplicationContext());
-//		manager.updateAppWidget(widgets, remoteView);
-//	}
 }

@@ -31,7 +31,6 @@ import java.util.Locale;
 import org.apache.http.client.ClientProtocolException;
 
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -50,6 +49,7 @@ import android.widget.ListView;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import name.gumartinm.weather.information.R;
+import name.gumartinm.weather.information.activity.SpecificActivity;
 import name.gumartinm.weather.information.fragment.specific.SpecificFragment;
 import name.gumartinm.weather.information.httpclient.CustomHTTPClient;
 import name.gumartinm.weather.information.model.DatabaseQueries;
@@ -195,9 +195,7 @@ public class OverviewFragment extends ListFragment {
                 .getFragmentManager().findFragmentById(R.id.weather_specific_fragment);
         if (fragment == null) {
             // handset layout
-            final Intent intent = new Intent("name.gumartinm.weather.information.WEATHERINFO")
-            .setComponent(new ComponentName("name.gumartinm.weather.information",
-                    "name.gumartinm.weather.information.activity.SpecificActivity"));
+            final Intent intent = new Intent(this.getActivity().getApplicationContext(), SpecificActivity.class);
             intent.putExtra("CHOSEN_DAY", (int) id);
             OverviewFragment.this.getActivity().startActivity(intent);
         } else {

@@ -17,7 +17,6 @@ package name.gumartinm.weather.information.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,9 +41,7 @@ public class AboutActivity extends Activity {
     }
 
     public void onClickLegalInformation(final View view) {
-        final Intent intent = new Intent("name.gumartinm.weather.information.WEATHERINFO")
-                .setComponent(new ComponentName("name.gumartinm.weather.information",
-                        "name.gumartinm.weather.information.activity.LicensesActivity"));
+        final Intent intent = new Intent(this.getApplicationContext(), LicensesActivity.class);
         this.startActivity(intent);
     }
 
