@@ -169,31 +169,31 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:orientation="horizontal" >
-                    <!-- Snow -->
+                    <!-- Humidity -->
                     <TextView
-                        android:id="@+id/weather_current_snow"
+                        android:id="@+id/weather_current_humidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/text_field_snow"
-                        android:gravity="end"
                         android:layout_gravity="end"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/weather_time_of_day_color_title"
                         android:layout_margin="5dp"
+                        android:gravity="end"
+                        android:text="@string/text_field_humidity"
+                        android:textAlignment="textEnd"
                         android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/weather_time_of_day_color_title"
                         android:textStyle="bold" />
 
-                    <!-- Snow Value-->
+                    <!-- Humidity Value-->
                     <TextView
-                        android:id="@+id/weather_current_snow_value"
+                        android:id="@+id/weather_current_humidity_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1.22"
+                        android:text="83"
                         android:layout_gravity="end"
                         android:gravity="end"
                         android:textAlignment="textEnd"
@@ -202,12 +202,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textStyle="normal" />
 
-                    <!-- Snow Units -->
+                    <!-- Humidity Units-->
                     <TextView
-                        android:id="@+id/weather_current_snow_units"
+                        android:id="@+id/weather_current_humidity_units"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" mm 3h"
+                        android:text="%"
                         android:layout_gravity="end"
                         android:gravity="end"
                         android:textAlignment="textEnd"
@@ -228,31 +228,31 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:orientation="horizontal" >
-                    <!-- Humidity -->
+                    <!-- Snow -->
                     <TextView
-                        android:id="@+id/weather_current_humidity"
+                        android:id="@+id/weather_current_snow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_margin="5dp"
+                        android:text="@string/text_field_snow"
                         android:gravity="start"
-                        android:text="@string/text_field_humidity"
+                        android:layout_gravity="start"
                         android:textAlignment="textStart"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/weather_time_of_day_color_title"
+                        android:layout_margin="5dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textStyle="bold" />
 
-                    <!-- Humidity Value-->
+                    <!-- Snow Value-->
                     <TextView
-                        android:id="@+id/weather_current_humidity_value"
+                        android:id="@+id/weather_current_snow_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="83"
+                        android:text="1.22"
                         android:layout_gravity="start"
                         android:gravity="start"
                         android:textAlignment="textStart"
@@ -261,12 +261,12 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textStyle="normal" />
 
-                    <!-- Humidity Units-->
+                    <!-- Snow Units -->
                     <TextView
-                        android:id="@+id/weather_current_humidity_units"
+                        android:id="@+id/weather_current_snow_units"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="%"
+                        android:text=" mm 3h"
                         android:layout_gravity="start"
                         android:gravity="start"
                         android:textAlignment="textStart"
@@ -276,7 +276,6 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textStyle="bold" />
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
