@@ -55,8 +55,6 @@ public class BootReceiver extends BroadcastReceiver {
 
             if (chosenInterval != 0) {
                 final AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                // TODO: better use some string instead of .class? In case I change the service class
-                // this could be a problem (I guess)
                 final Intent serviceIntent = new Intent(context, NotificationIntentService.class);
                 final PendingIntent alarmIntent = PendingIntent.getService(
                 		context,
