@@ -47,7 +47,7 @@ public class MainTabsActivity extends FragmentActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.fragment_pager);
+        this.setContentView(R.layout.weather_main_tabs);
 
         this.mPager = (ViewPager)this.findViewById(R.id.pager);
         this.mPager.setAdapter(new TabsAdapter(this.getSupportFragmentManager()));

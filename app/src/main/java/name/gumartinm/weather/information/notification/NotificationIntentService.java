@@ -195,7 +195,7 @@ public class NotificationIntentService extends IntentService {
         final String country = weatherLocation.getCountry();
         
         // 4. Insert data in RemoteViews.
-        final RemoteViews remoteView = new RemoteViews(this.getApplicationContext().getPackageName(), R.layout.notification);
+        final RemoteViews remoteView = new RemoteViews(this.getApplicationContext().getPackageName(), R.layout.weather_notification);
         remoteView.setImageViewBitmap(R.id.weather_notification_image, picture);
         remoteView.setTextViewText(R.id.weather_notification_temperature_max, tempMax);
         remoteView.setTextViewText(R.id.weather_notification_temperature_min, tempMin);
@@ -204,9 +204,7 @@ public class NotificationIntentService extends IntentService {
 
         // 5. Activity launcher.
         final Intent resultIntent =  new Intent(this.getApplicationContext(), MainTabsActivity.class);
-        // The PendingIntent to launch our activity if the user selects this notification
-//        final PendingIntent contentIntent = PendingIntent.getActivity(
-//        		this.getApplicationContext(), 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        // The PendingIntent to launch our activity if the user selects this notification.
         // The stack builder object will contain an artificial back stack for the started Activity.
         // This ensures that navigating backward from the Activity leads out of
         // your application to the Home screen.
