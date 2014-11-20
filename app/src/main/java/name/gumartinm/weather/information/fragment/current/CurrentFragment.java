@@ -225,7 +225,7 @@ public class CurrentFragment extends Fragment {
 
         // 2. Formatters
         final DecimalFormat numberFormatter = (DecimalFormat) NumberFormat.getNumberInstance(Locale.US);
-        numberFormatter.applyPattern("#####.#####");
+        numberFormatter.applyPattern("####.###");
         final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.US);
 
         
