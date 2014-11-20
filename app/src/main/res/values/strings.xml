@@ -23,6 +23,7 @@
     <string name="text_tab_five_days_forecast">5 DAY FORECAST</string>
     <string name="text_tab_ten_days_forecast">10 DAY FORECAST</string>
     <string name="text_tab_fourteen_days_forecast">14 DAY FORECAST</string>
+    <string name="text_tab_currently">CURRENTLY</string>
     <string name="text_field_sun_rise">SUN RISE</string>
     <string name="text_field_sun_set">SUN SET</string>
     <string name="text_field_feels_like">FEELS LIKE</string>
@@ -57,10 +58,25 @@
     <string name="weather_preferences_notifications_switch_key">weather_preferences_notifications_switch</string>
     <string name="weather_preferences_update_time_rate_key">weather_preferences_update_time_rate</string>
     <string name="weather_preferences_update_time_rate">Update time rate</string>
+    <string name="weather_preferences_update_time_rate_human_value_fifteen_minutes">fifteen minutes</string>
+    <string name="weather_preferences_update_time_rate_human_value_half_hour">half hour</string>
+    <string name="weather_preferences_update_time_rate_human_value_one_hour">one hour</string>
+    <string name="weather_preferences_update_time_rate_human_value_half_day">half day</string>
+    <string name="weather_preferences_update_time_rate_human_value_one_day">one day</string>
+    <string name="weather_preferences_refresh_interval_human_value_five_minutes">five minutes</string>
+    <string name="weather_preferences_refresh_interval_human_value_fifteen_minutes">fifteen minutes</string>
+    <string name="weather_preferences_refresh_interval_human_value_half_hour">half hour</string>
+    <string name="weather_preferences_refresh_interval_human_value_one_hour">one hour</string>
+    <string name="weather_preferences_refresh_interval_human_value_two_hours">two hours</string>
+    <string name="weather_preferences_refresh_interval_human_value_half_day">half day</string>
+    <string name="weather_preferences_refresh_interval_human_value_one_day">one day</string>
     <string name="weather_preferences_notifications_temperature_key">weather_preferences_notifications_temperature</string>
     <string name="weather_preferences_notifications_temperature">Temperature</string>
     <string name="weather_preferences_day_forecast_key">weather_preferences_day_forecast</string>
     <string name="weather_preferences_day_forecast">Forecast days number</string>
+    <string name="weather_preferences_day_forecast_human_value_five_day">5 day forecast</string>
+    <string name="weather_preferences_day_forecast_human_value_ten_day">10 day forecast</string>
+    <string name="weather_preferences_day_forecast_human_value_fourteen_day">14 day forecast</string>
     <string name="weather_preferences_refresh_interval_key">weather_preferences_refresh_interval</string>
     <string name="weather_preferences_refresh_interval">Refresh interval</string>
     <string name="weather_preferences_wind_key">weather_preferences_wind</string>
@@ -124,5 +140,19 @@
     <string name="my_url">http://gumartinm.name</string>
     <string name="openweathermap_url">http://openweathermap.org/</string>
     <string name="http_client_agent">Android WeatherInformation Agent</string>
-
+    <string name="update_time_rate_900">900</string>
+    <string name="update_time_rate_1800">1800</string>
+    <string name="update_time_rate_3600">3600</string>
+    <string name="update_time_rate_43200">43200</string>
+    <string name="update_time_rate_86400">86400</string>
+    <string name="refresh_interval_300000">300000</string>
+    <string name="refresh_interval_900000">900000</string>
+    <string name="refresh_interval_1800000">1800000</string>
+    <string name="refresh_interval_3600000">3600000</string>
+    <string name="refresh_interval_7200000">7200000</string>
+    <string name="refresh_interval_43200000">43200000</string>
+    <string name="refresh_interval_86400000">86400000</string>
+    <string name="weather_preferences_day_forecast_five_day">5</string>
+    <string name="weather_preferences_day_forecast_ten_day">10</string>
+    <string name="weather_preferences_day_forecast_fourteen_day">14</string>
 </resources>

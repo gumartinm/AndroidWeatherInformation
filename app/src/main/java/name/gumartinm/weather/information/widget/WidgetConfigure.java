@@ -30,6 +30,7 @@ import android.widget.Switch;
 import name.gumartinm.weather.information.R;
 
 public class WidgetConfigure extends Activity {
+    private static final String WIDGET_PREFERENCES_NAME = "WIDGET_PREFERENCES";
 	private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
     @Override
@@ -68,7 +69,7 @@ public class WidgetConfigure extends Activity {
         String realKeyPreference = keyPreference + "_" + mAppWidgetId;
 
         // What was saved to permanent storage (or default values if it is the first time)
-        final boolean isShowCountry = this.getSharedPreferences("WIDGET_PREFERENCES", Context.MODE_PRIVATE)
+        final boolean isShowCountry = this.getSharedPreferences(WIDGET_PREFERENCES_NAME, Context.MODE_PRIVATE)
                 .getBoolean(realKeyPreference, false);
 
         // What is shown on the screen
@@ -97,7 +98,7 @@ public class WidgetConfigure extends Activity {
         realKeyPreference = keyPreference + "_" + mAppWidgetId;
 
         // What was saved to permanent storage (or default values if it is the first time)
-        final int tempValue = this.getSharedPreferences("WIDGET_PREFERENCES", Context.MODE_PRIVATE).getInt(realKeyPreference, 0);
+        final int tempValue = this.getSharedPreferences(WIDGET_PREFERENCES_NAME, Context.MODE_PRIVATE).getInt(realKeyPreference, 0);
 
         // What is shown on the screen
         final Spinner tempUnits = (Spinner) this.findViewById(R.id.weather_appwidget_configure_temperature_units);
@@ -133,7 +134,7 @@ public class WidgetConfigure extends Activity {
     public void onClickOk(final View view) {
         // Save to permanent storage
         final SharedPreferences.Editor prefs = this.getSharedPreferences(
-                                        "WIDGET_PREFERENCES",
+                WIDGET_PREFERENCES_NAME,
                                         Context.MODE_PRIVATE).edit();
 
         /******************* Show/hide country field *******************/
@@ -167,7 +168,7 @@ public class WidgetConfigure extends Activity {
 
     public static void deletePreference(final Context context, final int appWidgetId) {
         final SharedPreferences.Editor prefs = context.getApplicationContext()
-                .getSharedPreferences("WIDGET_PREFERENCES", Context.MODE_PRIVATE).edit();
+                .getSharedPreferences(WIDGET_PREFERENCES_NAME, Context.MODE_PRIVATE).edit();
 
         /******************* Show/hide country field *******************/
         String keyPreference = context.getApplicationContext().getString(

@@ -41,15 +41,15 @@ public class BootReceiver extends BroadcastReceiver {
                     .getString(R.string.weather_preferences_update_time_rate_key);
             final String updateTimeRate = sharedPreferences.getString(keyPreference, "");            
             long chosenInterval = 0;
-            if (updateTimeRate.equals("900")) {
+            if (updateTimeRate.equals(context.getString(R.string.update_time_rate_900))) {
             	chosenInterval = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
-            } else if (updateTimeRate.equals("1800")) {
+            } else if (updateTimeRate.equals(context.getString(R.string.update_time_rate_1800))) {
             	chosenInterval = AlarmManager.INTERVAL_HALF_HOUR;
-            } else if (updateTimeRate.equals("3600")) {
+            } else if (updateTimeRate.equals(context.getString(R.string.update_time_rate_3600))) {
             	chosenInterval = AlarmManager.INTERVAL_HOUR;
-            } else if (updateTimeRate.equals("43200")) {
+            } else if (updateTimeRate.equals(context.getString(R.string.update_time_rate_43200))) {
             	chosenInterval = AlarmManager.INTERVAL_HALF_DAY;
-            } else if (updateTimeRate.equals("86400")) {
+            } else if (updateTimeRate.equals(context.getString(R.string.update_time_rate_86400))) {
             	chosenInterval = AlarmManager.INTERVAL_DAY;
             }
 

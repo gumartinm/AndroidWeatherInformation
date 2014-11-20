@@ -182,7 +182,7 @@ public class CurrentFragment extends Fragment {
         if (current != null && this.isDataFresh(weatherLocation.getLastCurrentUIUpdate())) {
             this.updateUI(current);
         } else {
-            // Load remote data (aynchronous)
+            // Load remote data (asynchronous)
             // Gets the data from the web.
         	this.getActivity().findViewById(R.id.weather_current_progressbar).setVisibility(View.VISIBLE);
         	this.getActivity().findViewById(R.id.weather_current_error_message).setVisibility(View.GONE);

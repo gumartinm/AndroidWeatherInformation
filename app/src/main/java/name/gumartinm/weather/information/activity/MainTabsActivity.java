@@ -92,8 +92,8 @@ public class MainTabsActivity extends FragmentActivity {
 
         };
 
-        actionBar.addTab(actionBar.newTab().setText("CURRENTLY").setTabListener(tabListener));
-        actionBar.addTab(actionBar.newTab().setText("FORECAST").setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText(this.getString(R.string.text_tab_currently)).setTabListener(tabListener));
+        actionBar.addTab(actionBar.newTab().setText(this.getString(R.string.text_tab_five_days_forecast)).setTabListener(tabListener));
     }
 
     @Override
@@ -164,11 +164,11 @@ public class MainTabsActivity extends FragmentActivity {
         final String keyPreference = this.getString(R.string.weather_preferences_day_forecast_key);
         final String value = sharedPreferences.getString(keyPreference, "");
         String humanValue = "";
-        if (value.equals("5")) {
+        if (value.equals(this.getString(R.string.weather_preferences_day_forecast_five_day))) {
             humanValue = this.getString(R.string.text_tab_five_days_forecast);
-        } else if (value.equals("10")) {
+        } else if (value.equals(this.getString(R.string.weather_preferences_day_forecast_ten_day))) {
             humanValue = this.getString(R.string.text_tab_ten_days_forecast);
-        } else if (value.equals("14")) {
+        } else if (value.equals(this.getString(R.string.weather_preferences_day_forecast_fourteen_day))) {
             humanValue = this.getString(R.string.text_tab_fourteen_days_forecast);
         }
         actionBar.getTabAt(1).setText(humanValue);

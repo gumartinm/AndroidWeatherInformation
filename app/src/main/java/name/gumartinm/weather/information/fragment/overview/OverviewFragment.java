@@ -351,8 +351,7 @@ public class OverviewFragment extends ListFragment {
 
             final String APIVersion = localContext.getResources().getString(R.string.api_version);
             final String urlAPI = localContext.getResources().getString(R.string.uri_api_weather_forecast);
-            // TODO: number as resource
-            final String url = weatherService.createURIAPIForecast(urlAPI, APIVersion, latitude, longitude, "14");
+            final String url = weatherService.createURIAPIForecast(urlAPI, APIVersion, latitude, longitude, localContext.getString(R.string.weather_preferences_day_forecast_fourteen_day));
             final String urlWithoutCache = url.concat("&time=" + System.currentTimeMillis());
             final String jsonData = HTTPClient.retrieveDataAsString(new URL(urlWithoutCache));
 

@@ -16,46 +16,46 @@
 -->
 <resources>
     <string-array name="weather_preferences_day_forecast">
-        <item>5</item>
-        <item>10</item>
-        <item>14</item>
+        <item>@string/weather_preferences_day_forecast_five_day</item>
+        <item>@string/weather_preferences_day_forecast_ten_day</item>
+        <item>@string/weather_preferences_day_forecast_fourteen_day</item>
     </string-array>
     <string-array name="weather_preferences_day_forecast_human_value">
-        <item>5 day forecast</item>
-        <item>10 day forecast</item>
-        <item>14 day forecast</item>
+        <item>@string/weather_preferences_day_forecast_human_value_five_day</item>
+        <item>@string/weather_preferences_day_forecast_human_value_ten_day</item>
+        <item>@string/weather_preferences_day_forecast_human_value_fourteen_day</item>
     </string-array>
     <string-array name="weather_preferences_update_time_rate">
-        <item>900</item>
-        <item>1800</item>
-        <item>3600</item>       
-        <item>43200</item>
-        <item>86400</item>    
+        <item>@string/update_time_rate_900</item>
+        <item>@string/update_time_rate_1800</item>
+        <item>@string/update_time_rate_3600</item>
+        <item>@string/update_time_rate_43200</item>
+        <item>@string/update_time_rate_86400</item>
     </string-array>
     <string-array name="weather_preferences_update_time_rate_human_value">
-        <item>fifteen minutes</item>
-        <item>half hour</item>
-        <item>one hour</item>   
-        <item>half day</item>
-        <item>one day</item>     
+        <item>@string/weather_preferences_update_time_rate_human_value_fifteen_minutes</item>
+        <item>@string/weather_preferences_update_time_rate_human_value_half_hour</item>
+        <item>@string/weather_preferences_update_time_rate_human_value_one_hour</item>
+        <item>@string/weather_preferences_update_time_rate_human_value_half_day</item>
+        <item>@string/weather_preferences_update_time_rate_human_value_one_day</item>
     </string-array>
     <string-array name="weather_preferences_refresh_interval">
-        <item>300000</item>
-        <item>900000</item>
-        <item>1800000</item>
-        <item>3600000</item>
-        <item>7200000</item>
-        <item>43200000</item>
-        <item>86400000</item>
+        <item>@string/refresh_interval_300000</item>
+        <item>@string/refresh_interval_900000</item>
+        <item>@string/refresh_interval_1800000</item>
+        <item>@string/refresh_interval_3600000</item>
+        <item>@string/refresh_interval_7200000</item>
+        <item>@string/refresh_interval_43200000</item>
+        <item>@string/refresh_interval_86400000</item>
     </string-array>
     <string-array name="weather_preferences_refresh_interval_human_value">
-        <item>five minutes</item>
-        <item>fifteen minutes</item>
-        <item>half hour</item>
-        <item>one hour</item>
-        <item>two hours</item>
-        <item>half day</item>
-        <item>one day</item>
+        <item>@string/weather_preferences_refresh_interval_human_value_five_minutes</item>
+        <item>@string/weather_preferences_refresh_interval_human_value_fifteen_minutes</item>
+        <item>@string/weather_preferences_refresh_interval_human_value_half_hour</item>
+        <item>@string/weather_preferences_refresh_interval_human_value_one_hour</item>
+        <item>@string/weather_preferences_refresh_interval_human_value_two_hours</item>
+        <item>@string/weather_preferences_refresh_interval_human_value_half_day</item>
+        <item>@string/weather_preferences_refresh_interval_human_value_one_day</item>
     </string-array>
     <string-array name="weather_preferences_temperature">
         <item>@string/weather_preferences_temperature_celsius</item>

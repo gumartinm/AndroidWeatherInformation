@@ -120,7 +120,6 @@ public class NotificationIntentService extends IntentService {
         final SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this.getApplicationContext());
 
-		// TODO: repeating the same code in Overview, Specific and Current!!!
 		// 1. Update units of measurement.
         // 1.1 Temperature
         String tempSymbol;

@@ -72,7 +72,7 @@
         	android:entries="@array/weather_preferences_update_time_rate_human_value"
         	android:entryValues="@array/weather_preferences_update_time_rate"
         	android:title="@string/weather_preferences_update_time_rate"
-        	android:defaultValue="900"
+        	android:defaultValue="@string/update_time_rate_900"
         	android:persistent="true"
         	android:selectable="true"
         	android:summary="fifteen minutes"

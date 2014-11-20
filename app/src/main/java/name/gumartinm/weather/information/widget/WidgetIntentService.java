@@ -52,7 +52,7 @@ import java.util.Locale;
 
 public class WidgetIntentService extends IntentService {
 	private static final String TAG = "WidgetIntentService";
-    private static final String WIDGET_PREFERENCES = "WIDGET_PREFERENCES";
+    private static final String WIDGET_PREFERENCES_NAME = "WIDGET_PREFERENCES";
 
 	public WidgetIntentService() {
 		super("WIS-Thread");
@@ -197,7 +197,7 @@ public class WidgetIntentService extends IntentService {
         String keyPreference = this.getApplicationContext().getString(R.string.widget_preferences_temperature_units_key);
         String realKeyPreference = keyPreference + "_" + appWidgetId;
         // What was saved to permanent storage (or default values if it is the first time)
-        final int tempValue = this.getSharedPreferences(WIDGET_PREFERENCES, Context.MODE_PRIVATE).getInt(realKeyPreference, 0);
+        final int tempValue = this.getSharedPreferences(WIDGET_PREFERENCES_NAME, Context.MODE_PRIVATE).getInt(realKeyPreference, 0);
         final String tempSymbol = this.getResources().getStringArray(R.array.weather_preferences_temperature)[tempValue];
         if (tempValue == 0) {
         	tempUnitsConversor = new UnitsConversor(){
@@ -233,7 +233,7 @@ public class WidgetIntentService extends IntentService {
         keyPreference = this.getApplicationContext().getString(R.string.widget_preferences_country_switch_key);
         realKeyPreference = keyPreference + "_" + appWidgetId;
         // What was saved to permanent storage (or default values if it is the first time)
-        final boolean isCountry = this.getSharedPreferences(WIDGET_PREFERENCES, Context.MODE_PRIVATE)
+        final boolean isCountry = this.getSharedPreferences(WIDGET_PREFERENCES_NAME, Context.MODE_PRIVATE)
                 .getBoolean(realKeyPreference, false);
 
 

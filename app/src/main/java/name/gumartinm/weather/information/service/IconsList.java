@@ -90,6 +90,15 @@ public enum IconsList {
             return R.drawable.weather_showers;
         }
     },
+    // TODO: I am sometimes receiving this code, there is no documentation about it on the
+    // openweathermap site.... But it exists!!! Some day, try to find out more information about it.
+    // see: http://openweathermap.org/img/w/10dd.png
+    ICON_10dd("10dd") {
+        @Override
+        public int getResourceDrawable() {
+            return R.drawable.weather_showers_scattered;
+        }
+    },
     ICON_10d("10d") {
         @Override
         public int getResourceDrawable() {
