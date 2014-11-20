@@ -50,6 +50,8 @@ import name.gumartinm.weather.information.model.currentweather.Current;
 import name.gumartinm.weather.information.parser.JPOSCurrentParser;
 import name.gumartinm.weather.information.service.IconsList;
 import name.gumartinm.weather.information.service.ServiceCurrentParser;
+import name.gumartinm.weather.information.service.conversor.TempUnitsConversor;
+import name.gumartinm.weather.information.service.conversor.UnitsConversor;
 
 
 public class NotificationIntentService extends IntentService {
@@ -111,59 +113,17 @@ public class NotificationIntentService extends IntentService {
         return weatherService.retrieveCurrentFromJPOS(jsonData);
     }
     
-    private interface UnitsConversor {
-    	
-    	public double doConversion(final double value);
-    }
-    
     private void showNotification(final Current current, final WeatherLocation weatherLocation) {
         final SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this.getApplicationContext());
 
 		// 1. Update units of measurement.
-        // 1.1 Temperature
-        String tempSymbol;
-        UnitsConversor tempUnitsConversor;
-        final String keyPreference = this.getApplicationContext().getString(R.string.weather_preferences_notifications_temperature_key);
-        final String[] values = this.getResources().getStringArray(R.array.weather_preferences_temperature);
-        final String unitsPreferenceValue = sharedPreferences.getString(
-                keyPreference, this.getString(R.string.weather_preferences_temperature_celsius));
-        if (unitsPreferenceValue.equals(values[0])) {
-        	tempSymbol = values[0];
-        	tempUnitsConversor = new UnitsConversor(){
-
-				@Override
-				public double doConversion(final double value) {
-					return value - 273.15;
-				}
-
-        	};
-        } else if (unitsPreferenceValue.equals(values[1])) {
-        	tempSymbol = values[1];
-        	tempUnitsConversor = new UnitsConversor(){
-
-				@Override
-				public double doConversion(final double value) {
-					return (value * 1.8) - 459.67;
-				}
-        		
-        	};
-        } else {
-        	tempSymbol = values[2];
-        	tempUnitsConversor = new UnitsConversor(){
-
-				@Override
-				public double doConversion(final double value) {
-					return value;
-				}
-        		
-        	};
-        }
+        final UnitsConversor tempUnitsConversor = new TempUnitsConversor(this.getApplicationContext());
 
 
         // 2. Formatters
         final DecimalFormat tempFormatter = (DecimalFormat) NumberFormat.getNumberInstance(Locale.US);
-        tempFormatter.applyPattern("#####.#####");
+        tempFormatter.applyPattern("#####.##");
 
 
         // 3. Prepare data for RemoteViews.
@@ -171,13 +131,13 @@ public class NotificationIntentService extends IntentService {
         if (current.getMain().getTemp_max() != null) {
             double conversion = (Double) current.getMain().getTemp_max();
             conversion = tempUnitsConversor.doConversion(conversion);
-            tempMax = tempFormatter.format(conversion) + tempSymbol;
+            tempMax = tempFormatter.format(conversion) + tempUnitsConversor.getSymbol();
         }
         String tempMin = "";
         if (current.getMain().getTemp_min() != null) {
             double conversion = (Double) current.getMain().getTemp_min();
             conversion = tempUnitsConversor.doConversion(conversion);
-            tempMin = tempFormatter.format(conversion) + tempSymbol;
+            tempMin = tempFormatter.format(conversion) + tempUnitsConversor.getSymbol();
         }
         Bitmap picture;
         if ((current.getWeather().size() > 0)
