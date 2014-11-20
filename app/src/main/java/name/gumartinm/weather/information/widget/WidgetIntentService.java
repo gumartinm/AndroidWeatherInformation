@@ -1,3 +1,18 @@
+/**
+ * Copyright 2014 Gustavo Martin Morcuende
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package name.gumartinm.weather.information.widget;
 
 import android.app.IntentService;
@@ -37,6 +52,7 @@ import java.util.Locale;
 
 public class WidgetIntentService extends IntentService {
 	private static final String TAG = "WidgetIntentService";
+    private static final String WIDGET_PREFERENCES = "WIDGET_PREFERENCES";
 
 	public WidgetIntentService() {
 		super("WIS-Thread");
@@ -44,7 +60,6 @@ public class WidgetIntentService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(final Intent intent) {
-		Log.i(TAG, "onHandleIntent");
 		final int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
 		final boolean isRefreshAppWidget = intent.getBooleanExtra("refreshAppWidget", false);
 
@@ -59,47 +74,16 @@ public class WidgetIntentService extends IntentService {
 		
 		if (weatherLocation == null) {
 			// Nothing to do. Show error.
-			final RemoteViews view = this.makeErrorView(appWidgetId);
-
-            final PermanentStorage store = new PermanentStorage(this.getApplicationContext());
-            store.removeWidgetCurrentData(appWidgetId);
-
+			final RemoteViews view = this.makeViewOnError(appWidgetId);
 			this.updateWidget(view, appWidgetId);
 			return;
 		}
 
-        // TODO: improve this code. Too tired right now...
 		if (!isRefreshAppWidget) {
-            RemoteViews view;
-
-            final PermanentStorage store = new PermanentStorage(this.getApplicationContext());
-            final Current current = store.getWidgetCurrentData(appWidgetId);
-            if (current != null) {
-                // Update UI.
-                view = this.makeView(current, weatherLocation, appWidgetId);
-            } else {
-                // Show error.
-                view = this.makeErrorView(appWidgetId);
-
-                store.removeWidgetCurrentData(appWidgetId);
-            }
+            final RemoteViews view = this.makeViewOnNotRefresh(weatherLocation, appWidgetId);
             this.updateWidget(view, appWidgetId);
 		} else {
-            RemoteViews view;
-
-            final PermanentStorage store = new PermanentStorage(this.getApplicationContext());
-            final Current current = this.getRemoteCurrent(weatherLocation);
-            if (current != null) {
-                // Update UI.
-                view = this.makeView(current, weatherLocation, appWidgetId);
-
-                store.saveWidgetCurrentData(current, appWidgetId);
-            } else {
-                // Show error.
-                view = this.makeErrorView(appWidgetId);
-
-                store.removeWidgetCurrentData(appWidgetId);
-            }
+            final RemoteViews view = this.makeViewOnRefresh(weatherLocation,appWidgetId);
             this.updateWidget(view, appWidgetId);
 		}
 	}
@@ -108,6 +92,53 @@ public class WidgetIntentService extends IntentService {
         final PermanentStorage store = new PermanentStorage(context.getApplicationContext());
 
         store.removeWidgetCurrentData(appWidgetId);
+    }
+
+    private RemoteViews makeViewOnError(final int appWidgetId) {
+        final RemoteViews view = this.makeErrorView(appWidgetId);
+
+        final PermanentStorage store = new PermanentStorage(this.getApplicationContext());
+        store.removeWidgetCurrentData(appWidgetId);
+
+        return view;
+    }
+
+    private RemoteViews makeViewOnNotRefresh(final WeatherLocation weatherLocation, final int appWidgetId) {
+        RemoteViews view;
+
+        final PermanentStorage store = new PermanentStorage(this.getApplicationContext());
+        final Current current = store.getWidgetCurrentData(appWidgetId);
+        if (current != null) {
+            // Update UI.
+            view = this.makeView(current, weatherLocation, appWidgetId);
+        } else {
+            // Show error.
+            view = this.makeErrorView(appWidgetId);
+
+            store.removeWidgetCurrentData(appWidgetId);
+        }
+
+        return view;
+    }
+
+    private RemoteViews makeViewOnRefresh(final WeatherLocation weatherLocation, final int appWidgetId) {
+        RemoteViews view;
+
+        final PermanentStorage store = new PermanentStorage(this.getApplicationContext());
+        final Current current = this.getRemoteCurrent(weatherLocation);
+        if (current != null) {
+            // Update UI.
+            view = this.makeView(current, weatherLocation, appWidgetId);
+
+            store.saveWidgetCurrentData(current, appWidgetId);
+        } else {
+            // Show error.
+            view = this.makeErrorView(appWidgetId);
+
+            store.removeWidgetCurrentData(appWidgetId);
+        }
+
+        return view;
     }
 
 	private Current getRemoteCurrent(final WeatherLocation weatherLocation) {
@@ -160,14 +191,13 @@ public class WidgetIntentService extends IntentService {
     
 	private RemoteViews makeView(final Current current, final WeatherLocation weatherLocation, final int appWidgetId) {
 
-		// TODO: repeating the same code in Overview, Specific and Current!!!
 		// 1. Update units of measurement.
 
         UnitsConversor tempUnitsConversor;
         String keyPreference = this.getApplicationContext().getString(R.string.widget_preferences_temperature_units_key);
         String realKeyPreference = keyPreference + "_" + appWidgetId;
         // What was saved to permanent storage (or default values if it is the first time)
-        final int tempValue = this.getSharedPreferences("WIDGET_PREFERENCES", Context.MODE_PRIVATE).getInt(realKeyPreference, 0);
+        final int tempValue = this.getSharedPreferences(WIDGET_PREFERENCES, Context.MODE_PRIVATE).getInt(realKeyPreference, 0);
         final String tempSymbol = this.getResources().getStringArray(R.array.weather_preferences_temperature)[tempValue];
         if (tempValue == 0) {
         	tempUnitsConversor = new UnitsConversor(){
@@ -203,7 +233,7 @@ public class WidgetIntentService extends IntentService {
         keyPreference = this.getApplicationContext().getString(R.string.widget_preferences_country_switch_key);
         realKeyPreference = keyPreference + "_" + appWidgetId;
         // What was saved to permanent storage (or default values if it is the first time)
-        final boolean isCountry = this.getSharedPreferences("WIDGET_PREFERENCES", Context.MODE_PRIVATE)
+        final boolean isCountry = this.getSharedPreferences(WIDGET_PREFERENCES, Context.MODE_PRIVATE)
                 .getBoolean(realKeyPreference, false);
 
 

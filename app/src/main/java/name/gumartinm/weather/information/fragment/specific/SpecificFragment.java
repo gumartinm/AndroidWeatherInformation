@@ -1,3 +1,18 @@
+/**
+ * Copyright 2014 Gustavo Martin Morcuende
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package name.gumartinm.weather.information.fragment.specific;
 
 import java.text.DecimalFormat;
@@ -7,11 +22,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +36,10 @@ import name.gumartinm.weather.information.R;
 import name.gumartinm.weather.information.model.forecastweather.Forecast;
 import name.gumartinm.weather.information.service.IconsList;
 import name.gumartinm.weather.information.service.PermanentStorage;
+import name.gumartinm.weather.information.service.conversor.PressureUnitsConversor;
+import name.gumartinm.weather.information.service.conversor.TempUnitsConversor;
+import name.gumartinm.weather.information.service.conversor.UnitsConversor;
+import name.gumartinm.weather.information.service.conversor.WindUnitsConversor;
 
 
 public class SpecificFragment extends Fragment {
@@ -101,116 +118,17 @@ public class SpecificFragment extends Fragment {
         }
     }
 
-    private interface UnitsConversor {
-    	
-    	public double doConversion(final double value);
-    }
-
     private void updateUI(final Forecast forecastWeatherData, final int chosenDay) {
 
-        final SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(this.getActivity());
-
-        // TODO: repeating the same code in Overview, Specific and Current!!!
         // 1. Update units of measurement.
-        // 1.1 Temperature
-        String tempSymbol;
-        UnitsConversor tempUnitsConversor;
-        String keyPreference = this.getResources().getString(
-                R.string.weather_preferences_temperature_key);
-        String[] values = this.getResources().getStringArray(R.array.weather_preferences_temperature);
-        String unitsPreferenceValue = sharedPreferences.getString(
-                keyPreference, this.getString(R.string.weather_preferences_temperature_celsius));
-        if (unitsPreferenceValue.equals(values[0])) {
-        	tempSymbol = values[0];
-        	tempUnitsConversor = new UnitsConversor(){
-
-				@Override
-				public double doConversion(final double value) {
-					return value - 273.15;
-				}
-        		
-        	};
-        } else if (unitsPreferenceValue.equals(values[1])) {
-        	tempSymbol = values[1];
-        	tempUnitsConversor = new UnitsConversor(){
-
-				@Override
-				public double doConversion(final double value) {
-					return (value * 1.8) - 459.67;
-				}
-        		
-        	};
-        } else {
-        	tempSymbol = values[2];
-        	tempUnitsConversor = new UnitsConversor(){
-
-				@Override
-				public double doConversion(final double value) {
-					return value;
-				}
-        		
-        	};
-        }
-
-        // 1.2 Wind
-        String windSymbol;
-        UnitsConversor windUnitsConversor;
-        keyPreference = this.getResources().getString(R.string.weather_preferences_wind_key);
-        values = this.getResources().getStringArray(R.array.weather_preferences_wind);
-        unitsPreferenceValue = sharedPreferences.getString(
-                keyPreference, this.getString(R.string.weather_preferences_wind_meters));
-        if (unitsPreferenceValue.equals(values[0])) {
-        	windSymbol = values[0];
-        	windUnitsConversor = new UnitsConversor(){
-
-    			@Override
-    			public double doConversion(double value) {
-    				return value;
-    			}	
-        	};
-        } else {
-        	windSymbol = values[1];
-        	windUnitsConversor = new UnitsConversor(){
-
-    			@Override
-    			public double doConversion(double value) {
-    				return value * 2.237;
-    			}	
-        	};
-        }
-
-        // 1.3 Pressure
-        String pressureSymbol;
-        UnitsConversor pressureUnitsConversor;
-        keyPreference = this.getResources().getString(R.string.weather_preferences_pressure_key);
-        values = this.getResources().getStringArray(R.array.weather_preferences_pressure);
-        unitsPreferenceValue = sharedPreferences.getString(
-                keyPreference, this.getString(R.string.weather_preferences_pressure_pascal));
-        if (unitsPreferenceValue.equals(values[0])) {
-        	pressureSymbol = values[0];
-        	pressureUnitsConversor = new UnitsConversor(){
-
-    			@Override
-    			public double doConversion(double value) {
-    				return value;
-    			}	
-        	};
-        } else {
-        	pressureSymbol = values[1];
-        	pressureUnitsConversor = new UnitsConversor(){
-
-    			@Override
-    			public double doConversion(double value) {
-    				return value / 113.25d;
-    			}	
-        	};
-        }
+        final UnitsConversor tempUnitsConversor = new TempUnitsConversor(this.getActivity().getApplicationContext());
+        final UnitsConversor windConversor = new WindUnitsConversor(this.getActivity().getApplicationContext());
+        final UnitsConversor pressureConversor = new PressureUnitsConversor(this.getActivity().getApplicationContext());
 
 
         // 2. Formatters
-        final DecimalFormat tempFormatter = (DecimalFormat) NumberFormat.getNumberInstance(Locale.US);
-        tempFormatter.applyPattern("#####.#####");
+        final DecimalFormat numberFormatter = (DecimalFormat) NumberFormat.getNumberInstance(Locale.US);
+        numberFormatter.applyPattern("#####.#####");
         
 
         // 3. Prepare data for UI.
@@ -227,13 +145,13 @@ public class SpecificFragment extends Fragment {
         if (forecast.getTemp().getMax() != null) {
             double conversion = (Double) forecast.getTemp().getMax();
             conversion = tempUnitsConversor.doConversion(conversion);
-            tempMax = tempFormatter.format(conversion) + tempSymbol;
+            tempMax = numberFormatter.format(conversion) + tempUnitsConversor.getSymbol();
         }        
         String tempMin = "";
         if (forecast.getTemp().getMin() != null) {
             double conversion = (Double) forecast.getTemp().getMin();
             conversion = tempUnitsConversor.doConversion(conversion);
-            tempMin = tempFormatter.format(conversion) + tempSymbol;
+            tempMin = numberFormatter.format(conversion) + tempUnitsConversor.getSymbol();
         }
         Bitmap picture;
         if ((forecast.getWeather().size() > 0) && (forecast.getWeather().get(0).getIcon() != null)
@@ -254,54 +172,55 @@ public class SpecificFragment extends Fragment {
         String humidityValue = "";
         if (forecast.getHumidity() != null) {
             final double conversion = (Double) forecast.getHumidity();
-            humidityValue = tempFormatter.format(conversion);
+            humidityValue = numberFormatter.format(conversion);
         }        
         String pressureValue = "";
         if (forecast.getPressure() != null) {
             double conversion = (Double) forecast.getPressure();
-            conversion = pressureUnitsConversor.doConversion(conversion);
-            pressureValue = tempFormatter.format(conversion);
+            conversion = pressureConversor.doConversion(conversion);
+            pressureValue = numberFormatter.format(conversion);
         }
         String windValue = "";
         if (forecast.getSpeed() != null) {
             double conversion = (Double) forecast.getSpeed();
-            conversion = windUnitsConversor.doConversion(conversion);
-            windValue = tempFormatter.format(conversion);
+            conversion = windConversor.doConversion(conversion);
+            windValue = numberFormatter.format(conversion);
         }
         String rainValue = "";
         if (forecast.getRain() != null) {
             final double conversion = (Double) forecast.getRain();
-            rainValue = tempFormatter.format(conversion);
+            rainValue = numberFormatter.format(conversion);
         }
         String cloudsValue = "";
         if (forecast.getRain() != null) {
             final double conversion = (Double) forecast.getClouds();
-            cloudsValue = tempFormatter.format(conversion);
+            cloudsValue = numberFormatter.format(conversion);
         }
 
+        final String tempSymbol = tempUnitsConversor.getSymbol();
         String tempDay = "";
         if (forecast.getTemp().getDay() != null) {
             double conversion = (Double) forecast.getTemp().getDay();
             conversion = tempUnitsConversor.doConversion(conversion);
-            tempDay = tempFormatter.format(conversion) + tempSymbol;
+            tempDay = numberFormatter.format(conversion) + tempSymbol;
         }
         String tempMorn = "";
         if (forecast.getTemp().getMorn() != null) {
             double conversion = (Double) forecast.getTemp().getMorn();
             conversion = tempUnitsConversor.doConversion(conversion);
-            tempMorn = tempFormatter.format(conversion) + tempSymbol;
+            tempMorn = numberFormatter.format(conversion) + tempSymbol;
         }
         String tempEve = "";
         if (forecast.getTemp().getEve() != null) {
             double conversion = (Double) forecast.getTemp().getEve();
             conversion = tempUnitsConversor.doConversion(conversion);
-            tempEve = tempFormatter.format(conversion) + tempSymbol;
+            tempEve = numberFormatter.format(conversion) + tempSymbol;
         }   
         String tempNight = "";
         if (forecast.getTemp().getNight() != null) {
             double conversion = (Double) forecast.getTemp().getNight();
             conversion = tempUnitsConversor.doConversion(conversion);
-            tempNight = tempFormatter.format(conversion) + tempSymbol;
+            tempNight = numberFormatter.format(conversion) + tempSymbol;
         }   
 
 
@@ -321,9 +240,9 @@ public class SpecificFragment extends Fragment {
         final TextView humidityValueView = (TextView) getActivity().findViewById(R.id.weather_specific_humidity_value);
         humidityValueView.setText(humidityValue);
         ((TextView) getActivity().findViewById(R.id.weather_specific_pressure_value)).setText(pressureValue);
-        ((TextView) getActivity().findViewById(R.id.weather_specific_pressure_units)).setText(pressureSymbol);
+        ((TextView) getActivity().findViewById(R.id.weather_specific_pressure_units)).setText(pressureConversor.getSymbol());
         ((TextView) getActivity().findViewById(R.id.weather_specific_wind_value)).setText(windValue);
-        ((TextView) getActivity().findViewById(R.id.weather_specific_wind_units)).setText(windSymbol);
+        ((TextView) getActivity().findViewById(R.id.weather_specific_wind_units)).setText(windConversor.getSymbol());
         final TextView rainValueView = (TextView) getActivity().findViewById(R.id.weather_specific_rain_value);
         rainValueView.setText(rainValue);
         final TextView cloudsValueView = (TextView) getActivity().findViewById(R.id.weather_specific_clouds_value);

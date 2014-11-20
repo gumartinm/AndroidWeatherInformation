@@ -58,10 +58,15 @@ import name.gumartinm.weather.information.parser.JPOSCurrentParser;
 import name.gumartinm.weather.information.service.IconsList;
 import name.gumartinm.weather.information.service.PermanentStorage;
 import name.gumartinm.weather.information.service.ServiceCurrentParser;
+import name.gumartinm.weather.information.service.conversor.PressureUnitsConversor;
+import name.gumartinm.weather.information.service.conversor.TempUnitsConversor;
+import name.gumartinm.weather.information.service.conversor.UnitsConversor;
+import name.gumartinm.weather.information.service.conversor.WindUnitsConversor;
 import name.gumartinm.weather.information.widget.WidgetProvider;
 
 public class CurrentFragment extends Fragment {
     private static final String TAG = "CurrentFragment";
+    private static final String BROADCAST_INTENT_ACTION = "name.gumartinm.weather.information.UPDATECURRENT";
     private BroadcastReceiver mReceiver;
 
     @Override
@@ -108,7 +113,7 @@ public class CurrentFragment extends Fragment {
 			@Override
 			public void onReceive(final Context context, final Intent intent) {
 				final String action = intent.getAction();
-				if (action.equals("name.gumartinm.weather.information.UPDATECURRENT")) {
+				if (action.equals(BROADCAST_INTENT_ACTION)) {
 					final Current currentRemote = (Current) intent.getSerializableExtra("current");
 
 					if (currentRemote != null) {
@@ -143,7 +148,7 @@ public class CurrentFragment extends Fragment {
 
         // Register receiver
         final IntentFilter filter = new IntentFilter();
-        filter.addAction("name.gumartinm.weather.information.UPDATECURRENT");
+        filter.addAction(BROADCAST_INTENT_ACTION);
         LocalBroadcastManager.getInstance(this.getActivity().getApplicationContext())
         						.registerReceiver(this.mReceiver, filter);
 
@@ -211,115 +216,16 @@ public class CurrentFragment extends Fragment {
         super.onPause();
     }
 
-    private interface UnitsConversor {
-    	
-    	public double doConversion(final double value);
-    }
-
     private void updateUI(final Current current) {
-    	
-        final SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(this.getActivity().getApplicationContext());
-
-        // TODO: repeating the same code in Overview, Specific and Current!!!
         // 1. Update units of measurement.
-        // 1.1 Temperature
-        String tempSymbol;
-        UnitsConversor tempUnitsConversor;
-        String keyPreference = this.getResources().getString(R.string.weather_preferences_temperature_key);
-        String[] values = this.getResources().getStringArray(R.array.weather_preferences_temperature);
-        String unitsPreferenceValue = sharedPreferences.getString(
-                keyPreference, this.getString(R.string.weather_preferences_temperature_celsius));
-        if (unitsPreferenceValue.equals(values[0])) {
-        	tempSymbol = values[0];
-        	tempUnitsConversor = new UnitsConversor(){
-
-				@Override
-				public double doConversion(final double value) {
-					return value - 273.15;
-				}
-        		
-        	};
-        } else if (unitsPreferenceValue.equals(values[1])) {
-        	tempSymbol = values[1];
-        	tempUnitsConversor = new UnitsConversor(){
-
-				@Override
-				public double doConversion(final double value) {
-					return (value * 1.8) - 459.67;
-				}
-        		
-        	};
-        } else {
-        	tempSymbol = values[2];
-        	tempUnitsConversor = new UnitsConversor(){
-
-				@Override
-				public double doConversion(final double value) {
-					return value;
-				}
-        		
-        	};
-        }
-
-        // 1.2 Wind
-        String windSymbol;
-        UnitsConversor windUnitsConversor;
-        keyPreference = this.getResources().getString(R.string.weather_preferences_wind_key);
-        values = this.getResources().getStringArray(R.array.weather_preferences_wind);
-        unitsPreferenceValue = sharedPreferences.getString(
-                keyPreference, this.getString(R.string.weather_preferences_wind_meters));
-        if (unitsPreferenceValue.equals(values[0])) {
-        	windSymbol = values[0];
-        	windUnitsConversor = new UnitsConversor(){
-
-    			@Override
-    			public double doConversion(double value) {
-    				return value;
-    			}	
-        	};
-        } else {
-        	windSymbol = values[1];
-        	windUnitsConversor = new UnitsConversor(){
-
-    			@Override
-    			public double doConversion(double value) {
-    				return value * 2.237;
-    			}	
-        	};
-        }
-
-        // 1.3 Pressure
-        String pressureSymbol;
-        UnitsConversor pressureUnitsConversor;
-        keyPreference = this.getResources().getString(R.string.weather_preferences_pressure_key);
-        values = this.getResources().getStringArray(R.array.weather_preferences_pressure);
-        unitsPreferenceValue = sharedPreferences.getString(
-                keyPreference, this.getString(R.string.weather_preferences_pressure_pascal));
-        if (unitsPreferenceValue.equals(values[0])) {
-        	pressureSymbol = values[0];
-        	pressureUnitsConversor = new UnitsConversor(){
-
-    			@Override
-    			public double doConversion(double value) {
-    				return value;
-    			}	
-        	};
-        } else {
-        	pressureSymbol = values[1];
-        	pressureUnitsConversor = new UnitsConversor(){
-
-    			@Override
-    			public double doConversion(double value) {
-    				return value / 113.25d;
-    			}	
-        	};
-        }
+        final UnitsConversor tempUnitsConversor = new TempUnitsConversor(this.getActivity().getApplicationContext());
+        final UnitsConversor windConversor = new WindUnitsConversor(this.getActivity().getApplicationContext());
+        final UnitsConversor pressureConversor = new PressureUnitsConversor(this.getActivity().getApplicationContext());
 
 
         // 2. Formatters
-        final DecimalFormat tempFormatter = (DecimalFormat) NumberFormat.getNumberInstance(Locale.US);
-        tempFormatter.applyPattern("#####.#####");
+        final DecimalFormat numberFormatter = (DecimalFormat) NumberFormat.getNumberInstance(Locale.US);
+        numberFormatter.applyPattern("#####.#####");
         final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.US);
 
         
@@ -328,13 +234,13 @@ public class CurrentFragment extends Fragment {
         if (current.getMain().getTemp_max() != null) {
             double conversion = (Double) current.getMain().getTemp_max();
             conversion = tempUnitsConversor.doConversion(conversion);
-            tempMax = tempFormatter.format(conversion) + tempSymbol;
+            tempMax = numberFormatter.format(conversion) + tempUnitsConversor.getSymbol();
         }
         String tempMin = "";
         if (current.getMain().getTemp_min() != null) {
             double conversion = (Double) current.getMain().getTemp_min();
             conversion = tempUnitsConversor.doConversion(conversion);
-            tempMin = tempFormatter.format(conversion) + tempSymbol;
+            tempMin = numberFormatter.format(conversion) + tempUnitsConversor.getSymbol();
         }
         Bitmap picture;
         if ((current.getWeather().size() > 0)
@@ -357,45 +263,45 @@ public class CurrentFragment extends Fragment {
         if ((current.getMain() != null)
                 && (current.getMain().getHumidity() != null)) {
             final double conversion = (Double) current.getMain().getHumidity();
-            humidityValue = tempFormatter.format(conversion);
+            humidityValue = numberFormatter.format(conversion);
         }
         String pressureValue = "";
         if ((current.getMain() != null)
                 && (current.getMain().getPressure() != null)) {
             double conversion = (Double) current.getMain().getPressure();
-            conversion = pressureUnitsConversor.doConversion(conversion);
-            pressureValue = tempFormatter.format(conversion);
+            conversion = pressureConversor.doConversion(conversion);
+            pressureValue = numberFormatter.format(conversion);
         }
         String windValue = "";
         if ((current.getWind() != null)
                 && (current.getWind().getSpeed() != null)) {
             double conversion = (Double) current.getWind().getSpeed();
-            conversion = windUnitsConversor.doConversion(conversion);
-            windValue = tempFormatter.format(conversion);
+            conversion = windConversor.doConversion(conversion);
+            windValue = numberFormatter.format(conversion);
         }
         String rainValue = "";
         if ((current.getRain() != null)
                 && (current.getRain().get3h() != null)) {
             final double conversion = (Double) current.getRain().get3h();
-            rainValue = tempFormatter.format(conversion);
+            rainValue = numberFormatter.format(conversion);
         }
         String cloudsValue = "";
         if ((current.getClouds() != null)
                 && (current.getClouds().getAll() != null)) {
             final double conversion = (Double) current.getClouds().getAll();
-            cloudsValue = tempFormatter.format(conversion);
+            cloudsValue = numberFormatter.format(conversion);
         }
         String snowValue = "";
         if ((current.getSnow() != null)
                 && (current.getSnow().get3h() != null)) {
             final double conversion = (Double) current.getSnow().get3h();
-            snowValue = tempFormatter.format(conversion);
+            snowValue = numberFormatter.format(conversion);
         }
         String feelsLike = "";
         if (current.getMain().getTemp() != null) {
             double conversion = (Double) current.getMain().getTemp();
             conversion = tempUnitsConversor.doConversion(conversion);
-            feelsLike = tempFormatter.format(conversion);
+            feelsLike = numberFormatter.format(conversion);
         }
         String sunRiseTime = "";
         if (current.getSys().getSunrise() != null) {
@@ -427,10 +333,10 @@ public class CurrentFragment extends Fragment {
         		this.getActivity().getApplicationContext().getString(R.string.text_units_percent));
         
         ((TextView) getActivity().findViewById(R.id.weather_current_pressure_value)).setText(pressureValue);
-        ((TextView) getActivity().findViewById(R.id.weather_current_pressure_units)).setText(pressureSymbol);
+        ((TextView) getActivity().findViewById(R.id.weather_current_pressure_units)).setText(pressureConversor.getSymbol());
         
         ((TextView) getActivity().findViewById(R.id.weather_current_wind_value)).setText(windValue);
-        ((TextView) getActivity().findViewById(R.id.weather_current_wind_units)).setText(windSymbol);
+        ((TextView) getActivity().findViewById(R.id.weather_current_wind_units)).setText(windConversor.getSymbol());
         
         ((TextView) getActivity().findViewById(R.id.weather_current_rain_value)).setText(rainValue);
         ((TextView) getActivity().findViewById(R.id.weather_current_rain_units)).setText(
@@ -445,7 +351,7 @@ public class CurrentFragment extends Fragment {
         		this.getActivity().getApplicationContext().getString(R.string.text_units_mm3h));
         
         ((TextView) getActivity().findViewById(R.id.weather_current_feelslike_value)).setText(feelsLike);
-        ((TextView) getActivity().findViewById(R.id.weather_current_feelslike_units)).setText(tempSymbol);
+        ((TextView) getActivity().findViewById(R.id.weather_current_feelslike_units)).setText(tempUnitsConversor.getSymbol());
         
         ((TextView) getActivity().findViewById(R.id.weather_current_sunrise_value)).setText(sunRiseTime);
 
@@ -530,7 +436,7 @@ public class CurrentFragment extends Fragment {
         protected void onPostExecute(final Current current) {
 
             // Call updateUI on the UI thread.
-            final Intent currentData = new Intent("name.gumartinm.weather.information.UPDATECURRENT");
+            final Intent currentData = new Intent(BROADCAST_INTENT_ACTION);
             currentData.putExtra("current", current);
             LocalBroadcastManager.getInstance(this.localContext).sendBroadcastSync(currentData);
         }

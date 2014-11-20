@@ -59,9 +59,12 @@ import name.gumartinm.weather.information.parser.JPOSForecastParser;
 import name.gumartinm.weather.information.service.IconsList;
 import name.gumartinm.weather.information.service.PermanentStorage;
 import name.gumartinm.weather.information.service.ServiceForecastParser;
+import name.gumartinm.weather.information.service.conversor.TempUnitsConversor;
+import name.gumartinm.weather.information.service.conversor.UnitsConversor;
 
 public class OverviewFragment extends ListFragment {
     private static final String TAG = "OverviewFragment";
+    private static final String BROADCAST_INTENT_ACTION = "name.gumartinm.weather.information.UPDATEFORECAST";
     private BroadcastReceiver mReceiver;
 
     @Override
@@ -101,7 +104,7 @@ public class OverviewFragment extends ListFragment {
 			@Override
 			public void onReceive(final Context context, final Intent intent) {
 				final String action = intent.getAction();
-				if (action.equals("name.gumartinm.weather.information.UPDATEFORECAST")) {
+				if (action.equals(BROADCAST_INTENT_ACTION)) {
 					final Forecast forecastRemote = (Forecast) intent.getSerializableExtra("forecast");
 
 					if (forecastRemote != null) {
@@ -136,7 +139,7 @@ public class OverviewFragment extends ListFragment {
 
         // Register receiver
         final IntentFilter filter = new IntentFilter();
-        filter.addAction("name.gumartinm.weather.information.UPDATEFORECAST");
+        filter.addAction(BROADCAST_INTENT_ACTION);
         LocalBroadcastManager.getInstance(this.getActivity().getApplicationContext())
         						.registerReceiver(this.mReceiver, filter);
 
@@ -203,61 +206,16 @@ public class OverviewFragment extends ListFragment {
             fragment.updateUIByChosenDay((int) id);
         }
     }
-
-    private interface UnitsConversor {
-    	
-    	public double doConversion(final double value);
-    }
     
     private void updateUI(final Forecast forecastWeatherData) {
 
-        final SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(this.getActivity().getApplicationContext());
-
-        // TODO: repeating the same code in Overview, Specific and Current!!!
         // 1. Update units of measurement.
-        String symbol;
-        UnitsConversor unitsConversor;
-        String keyPreference = this.getResources().getString(
-                R.string.weather_preferences_temperature_key);
-        final String[] values = this.getResources().getStringArray(R.array.weather_preferences_temperature);
-        final String unitsPreferenceValue = sharedPreferences.getString(
-                keyPreference, this.getString(R.string.weather_preferences_temperature_celsius));
-        if (unitsPreferenceValue.equals(values[0])) {
-        	symbol = values[0];
-        	unitsConversor = new UnitsConversor(){
-
-				@Override
-				public double doConversion(final double value) {
-					return value - 273.15;
-				}
-        		
-        	};
-        } else if (unitsPreferenceValue.equals(values[1])) {
-        	symbol = values[1];
-        	unitsConversor = new UnitsConversor(){
-
-				@Override
-				public double doConversion(final double value) {
-					return (value * 1.8) - 459.67;
-				}
-        		
-        	};
-        } else {
-        	symbol = values[2];
-        	unitsConversor = new UnitsConversor(){
-
-				@Override
-				public double doConversion(final double value) {
-					return value;
-				}
-        		
-        	};
-        }
-
+        final UnitsConversor tempUnitsConversor = new TempUnitsConversor(this.getActivity().getApplicationContext());
 
         // 2. Update number day forecast.
-        keyPreference = this.getResources().getString(R.string.weather_preferences_day_forecast_key);
+        final SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this.getActivity().getApplicationContext());
+        final String keyPreference = this.getResources().getString(R.string.weather_preferences_day_forecast_key);
         final String dayForecast = sharedPreferences.getString(keyPreference, "5");
         final int mDayForecast = Integer.valueOf(dayForecast);
 
@@ -300,18 +258,20 @@ public class OverviewFragment extends ListFragment {
             Double maxTemp = null;
             if (forecast.getTemp().getMax() != null) {
                 maxTemp = (Double) forecast.getTemp().getMax();
-                maxTemp = unitsConversor.doConversion(maxTemp);
+                maxTemp = tempUnitsConversor.doConversion(maxTemp);
             }
 
             Double minTemp = null;
             if (forecast.getTemp().getMin() != null) {
                 minTemp = (Double) forecast.getTemp().getMin();
-                minTemp = unitsConversor.doConversion(minTemp);
+                minTemp = tempUnitsConversor.doConversion(minTemp);
             }
 
             if ((maxTemp != null) && (minTemp != null)) {
+                // TODO i18n?
+                final String tempSymbol = tempUnitsConversor.getSymbol();
                 entries.add(new OverviewEntry(dayTextName, monthAndDayNumberText,
-                        tempFormatter.format(maxTemp) + symbol, tempFormatter.format(minTemp) + symbol,
+                        tempFormatter.format(maxTemp) + tempSymbol, tempFormatter.format(minTemp) + tempSymbol,
                         picture));
             }
 
@@ -403,7 +363,7 @@ public class OverviewFragment extends ListFragment {
         protected void onPostExecute(final Forecast forecast) {
         	
             // Call updateUI on the UI thread.
-        	final Intent forecastData = new Intent("name.gumartinm.weather.information.UPDATEFORECAST");
+        	final Intent forecastData = new Intent(BROADCAST_INTENT_ACTION);
         	forecastData.putExtra("forecast", forecast);
             LocalBroadcastManager.getInstance(this.localContext).sendBroadcastSync(forecastData);
         }
