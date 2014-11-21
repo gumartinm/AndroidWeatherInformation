@@ -123,7 +123,7 @@ public class NotificationIntentService extends IntentService {
 
         // 2. Formatters
         final DecimalFormat tempFormatter = (DecimalFormat) NumberFormat.getNumberInstance(Locale.US);
-        tempFormatter.applyPattern("#####.##");
+        tempFormatter.applyPattern("###.##");
 
 
         // 3. Prepare data for RemoteViews.

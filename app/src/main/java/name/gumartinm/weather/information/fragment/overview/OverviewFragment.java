@@ -222,7 +222,7 @@ public class OverviewFragment extends ListFragment {
 
         // 3. Formatters
         final DecimalFormat tempFormatter = (DecimalFormat) NumberFormat.getNumberInstance(Locale.US);
-        tempFormatter.applyPattern("#####.##");
+        tempFormatter.applyPattern("###.##");
         final SimpleDateFormat dayNameFormatter = new SimpleDateFormat("EEE", Locale.US);
         final SimpleDateFormat monthAndDayNumberormatter = new SimpleDateFormat("MMM d", Locale.US);
 

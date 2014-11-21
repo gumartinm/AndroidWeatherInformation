@@ -239,7 +239,7 @@ public class WidgetIntentService extends IntentService {
 
 		// 3. Formatters
 		final DecimalFormat tempFormatter = (DecimalFormat) NumberFormat.getNumberInstance(Locale.US);
-		tempFormatter.applyPattern("#####.#####");
+		tempFormatter.applyPattern("###.##");
 
 
 		// 4. Prepare data for RemoteViews.

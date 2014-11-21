@@ -128,7 +128,7 @@ public class SpecificFragment extends Fragment {
 
         // 2. Formatters
         final DecimalFormat numberFormatter = (DecimalFormat) NumberFormat.getNumberInstance(Locale.US);
-        numberFormatter.applyPattern("#####.#####");
+        numberFormatter.applyPattern("###.##");
         
 
         // 3. Prepare data for UI.
