@@ -169,6 +169,17 @@ public class PreferencesFragment extends PreferenceFragment implements OnSharedP
             humanValue = humanValues[2];
         }
         connectionPref.setSummary(humanValue);
+
+        // APPID
+        keyPreference = this.getActivity().getApplicationContext().getString(
+                R.string.weather_preferences_app_id_key);
+        connectionPref = this.findPreference(keyPreference);
+        value = this.getPreferenceManager().getSharedPreferences()
+                .getString(keyPreference, this.getString(R.string.weather_preferences_app_id_text_empty_key));
+        if (value.isEmpty()) {
+            value = this.getString(R.string.weather_preferences_app_id_text_empty_key);
+        }
+        connectionPref.setSummary(value);
     }
 
     @Override
@@ -355,6 +366,20 @@ public class PreferencesFragment extends PreferenceFragment implements OnSharedP
             }
 
             connectionPref.setSummary(humanValue);
+            return;
+        }
+
+        // APPID
+        keyValue = this.getActivity().getApplicationContext().getString(
+                R.string.weather_preferences_app_id_key);
+        if (key.equals(keyValue)) {
+            final Preference connectionPref = this.findPreference(key);
+            String value = sharedPreferences.getString(key, this.getString(R.string.weather_preferences_app_id_text_empty_key));
+            if (value.isEmpty()) {
+                value = this.getString(R.string.weather_preferences_app_id_text_empty_key);
+            }
+
+            connectionPref.setSummary(value);
             return;
         }
     }

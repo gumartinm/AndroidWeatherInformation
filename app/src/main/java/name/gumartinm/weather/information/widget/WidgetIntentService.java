@@ -20,10 +20,12 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.net.http.AndroidHttpClient;
+import android.preference.PreferenceManager;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.view.View;
@@ -172,12 +174,18 @@ public class WidgetIntentService extends IntentService {
 			final CustomHTTPClient HTTPClient, final ServiceCurrentParser weatherService)
 					throws ClientProtocolException, MalformedURLException, URISyntaxException,
 					JsonParseException, IOException {
+        final SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this.getApplicationContext());
+        final String APPID = sharedPreferences.getString(this.getString(R.string.weather_preferences_app_id_key), "");
 
 		final String APIVersion = this.getResources().getString(R.string.api_version);
 
 		final String urlAPI = this.getResources().getString(R.string.uri_api_weather_today);
-		final String url = weatherService.createURIAPICurrent(urlAPI, APIVersion,
+		String url = weatherService.createURIAPICurrent(urlAPI, APIVersion,
 				weatherLocation.getLatitude(), weatherLocation.getLongitude());
+        if (!APPID.isEmpty()) {
+            url = url.concat("&APPID=" + APPID);
+        }
 		final String jsonData = HTTPClient.retrieveDataAsString(new URL(url));
 
 		return weatherService.retrieveCurrentFromJPOS(jsonData);

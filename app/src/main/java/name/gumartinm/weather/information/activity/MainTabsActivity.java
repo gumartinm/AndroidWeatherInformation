@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -31,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import name.gumartinm.weather.information.R;
+import name.gumartinm.weather.information.fragment.APIKeyNoticeDialogFragment;
 import name.gumartinm.weather.information.fragment.current.CurrentFragment;
 import name.gumartinm.weather.information.fragment.overview.OverviewFragment;
 import name.gumartinm.weather.information.model.DatabaseQueries;
@@ -142,6 +144,25 @@ public class MainTabsActivity extends FragmentActivity {
     public void onResume() {
         super.onResume();
 
+        final SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this.getApplicationContext());
+
+        final String APPID = sharedPreferences.getString(this.getString(R.string.weather_preferences_app_id_key), "");
+
+        final String noticeKeyPreference = this.getString(R.string.api_id_key_notice_preference_key);
+        final boolean notice = sharedPreferences.getBoolean(noticeKeyPreference, true);
+
+        if (notice && APPID.isEmpty()) {
+            final FragmentManager fm = this.getSupportFragmentManager();
+            final Fragment buttonsFragment = fm.findFragmentByTag("noticeDialog");
+            if (buttonsFragment == null) {
+                final DialogFragment newFragment = APIKeyNoticeDialogFragment.newInstance(R.string.api_id_key_notice_title);
+                newFragment.setRetainInstance(true);
+                newFragment.setCancelable(false);
+                newFragment.show(fm, "noticeDialog");
+            }
+        }
+
         final ActionBar actionBar = this.getActionBar();
         
         // 1. Update title.
@@ -159,8 +180,6 @@ public class MainTabsActivity extends FragmentActivity {
         }
 
         // 2. Update forecast tab text.
-        final SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(this.getApplicationContext());
         final String keyPreference = this.getString(R.string.weather_preferences_day_forecast_key);
         final String value = sharedPreferences.getString(keyPreference, "");
         String humanValue = "";

@@ -348,10 +348,18 @@ public class OverviewFragment extends ListFragment {
 
         private Forecast doInBackgroundThrowable(final double latitude, final double longitude)
                         throws URISyntaxException, ClientProtocolException, JsonParseException, IOException {
+            final SharedPreferences sharedPreferences = PreferenceManager
+                    .getDefaultSharedPreferences(localContext.getApplicationContext());
+            final String APPID = sharedPreferences.getString(localContext.getString(R.string.weather_preferences_app_id_key), "");
 
-            final String APIVersion = localContext.getResources().getString(R.string.api_version);
-            final String urlAPI = localContext.getResources().getString(R.string.uri_api_weather_forecast);
-            final String url = weatherService.createURIAPIForecast(urlAPI, APIVersion, latitude, longitude, localContext.getString(R.string.weather_preferences_day_forecast_fourteen_day));
+            final String APIVersion = localContext.getString(R.string.api_version);
+            final String urlAPI = localContext.getString(R.string.uri_api_weather_forecast);
+            String url = weatherService.createURIAPIForecast(
+                    urlAPI, APIVersion, latitude, longitude,
+                    localContext.getString(R.string.weather_preferences_day_forecast_fourteen_day));
+            if (!APPID.isEmpty()) {
+                url = url.concat("&APPID=" + APPID);
+            }
             final String jsonData = HTTPClient.retrieveDataAsString(new URL(url));
 
             return weatherService.retrieveForecastFromJPOS(jsonData);

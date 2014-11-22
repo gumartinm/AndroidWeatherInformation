@@ -101,21 +101,24 @@ public class NotificationIntentService extends IntentService {
             final CustomHTTPClient HTTPClient, final ServiceCurrentParser weatherService)
                     throws ClientProtocolException, MalformedURLException, URISyntaxException,
                     JsonParseException, IOException {
+        final SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this.getApplicationContext());
+        final String APPID = sharedPreferences.getString(this.getString(R.string.weather_preferences_app_id_key), "");
 
         final String APIVersion = this.getResources().getString(R.string.api_version);
 
         final String urlAPI = this.getResources().getString(R.string.uri_api_weather_today);
-        final String url = weatherService.createURIAPICurrent(urlAPI, APIVersion,
+        String url = weatherService.createURIAPICurrent(urlAPI, APIVersion,
                 weatherLocation.getLatitude(), weatherLocation.getLongitude());
+        if (!APPID.isEmpty()) {
+            url = url.concat("&APPID=" + APPID);
+        }
         final String jsonData = HTTPClient.retrieveDataAsString(new URL(url));
 
         return weatherService.retrieveCurrentFromJPOS(jsonData);
     }
     
     private void showNotification(final Current current, final WeatherLocation weatherLocation) {
-        final SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(this.getApplicationContext());
-
 		// 1. Update units of measurement.
         final UnitsConversor tempUnitsConversor = new TempUnitsConversor(this.getApplicationContext());
 
