@@ -87,4 +87,11 @@
             android:defaultValue="@string/weather_preferences_temperature_celsius"
             android:dependency="@string/weather_preferences_notifications_switch_key"/>
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/weather_preferences_app_id">
+        <EditTextPreference android:key="@string/weather_preferences_app_id_key"
+            android:title="@string/weather_preferences_app_id_text"
+            android:defaultValue=""
+            android:summary="">
+        </EditTextPreference>
+    </PreferenceCategory>
 </PreferenceScreen>
