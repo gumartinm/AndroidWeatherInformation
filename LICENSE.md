@@ -65,3 +65,8 @@ The Android Open Source Project. The license can be found in this path:
 ## [Google Play Services](https://developer.android.com/google/play-services/index.html)
 
 WeatherInformation uses the Google Play Services API and libraries.
+
+## [OpenWeatherMap](http://openweathermap.org/)
+
+WeatherInformation could not work without OpenWeatherMap. It is licensed under the Creative Commons
+Attribution-Share Alike 2.0 Generic License. This license can be found at this url: [http://creativecommons.org/licenses/by-sa/2.0/](http://creativecommons.org/licenses/by-sa/2.0/)
