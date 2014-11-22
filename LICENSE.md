@@ -29,17 +29,17 @@ can be found in the following path:
 
 It applies to the following files:
 
- * weather-clear-night-symbolic.svg
- * weather-clear-symbolic.svg
- * weather-few-clouds-night-symbolic.svg
- * weather-few-clouds-symbolic.svg
- * weather-fog-symbolic.svg
- * weather-overcast-symbolic.svg
- * weather-severe-alert-symbolic.svg
- * weather-showers-symbolic.svg
- * weather_showers_scattered-symbolic.svg
- * weather-snow-symbolic.svg
- * weather-storm-symbolic.svg
+ * weather_clear_night.png
+ * weather_clear.png
+ * weather_few_clouds_night.png
+ * weather_few_clouds.png
+ * weather_fog.png
+ * weather_overcast.png
+ * weather_severe_alert.png
+ * weather_showers.png
+ * weather_showers_scattered.png
+ * weather_snow.png
+ * weather_storm.png
 
 
 ## Java code from [Apache HttpClient 3.X](http://hc.apache.org/httpclient-3.x/)
