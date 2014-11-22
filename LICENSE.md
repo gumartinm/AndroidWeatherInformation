@@ -11,6 +11,18 @@ This license applies to the whole project with the exception of third party libr
 and files, which may be licensed under different licenses, as noted below.
 
 
+## [XAML Icon Studio](http://www.xaml-icon-studio.com)
+
+The logo, action bar and notification icons used by this application were provided by
+[http://www.xaml-icon-studio.com](http://www.xaml-icon-studio.com) The file was originally
+taken from this url: [http://www.iconarchive.com/show/agriculture-icons-by-xaml-icon-studio/Sunflower-icon.html](http://www.iconarchive.com/show/agriculture-icons-by-xaml-icon-studio/Sunflower-icon.html)
+Copyright holder [http://www.xaml-icon-studio.com](http://www.xaml-icon-studio.com) It is free for non-commercial
+use but you may not use this icon without the explicit consent from the copyright holder. This license
+applies to the following files:
+
+ * ic_launcher.png
+
+
 ## [Jackson](http://wiki.fasterxml.com/JacksonHome)
 
 WeatherInformation uses **jackson-core-2.3.3.jar** library, which is licensed under the
