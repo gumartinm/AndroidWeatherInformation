@@ -17,8 +17,8 @@ The logo, action bar and notification icon used by this application were provide
 [http://www.xaml-icon-studio.com](http://www.xaml-icon-studio.com). The file was originally
 taken from this url: [http://www.iconarchive.com/show/agriculture-icons-by-xaml-icon-studio/Sunflower-icon.html](http://www.iconarchive.com/show/agriculture-icons-by-xaml-icon-studio/Sunflower-icon.html).
 Copyright holder [http://www.xaml-icon-studio.com](http://www.xaml-icon-studio.com). It is free for non-commercial
-use but you may not use this icon without the explicit consent from the copyright holder. This license
-applies to the following files:
+use but you may not use this file without the explicit consent from the copyright holder. This license
+applies to the following file:
 
  * ic_launcher.png
 
