@@ -13,7 +13,7 @@ and files, which may be licensed under different licenses, as noted below.
 
 ## [XAML Icon Studio](http://www.xaml-icon-studio.com)
 
-The logo, action bar and notification icons used by this application were provided by
+The logo, action bar and notification icon used by this application were provided by
 [http://www.xaml-icon-studio.com](http://www.xaml-icon-studio.com) The file was originally
 taken from this url: [http://www.iconarchive.com/show/agriculture-icons-by-xaml-icon-studio/Sunflower-icon.html](http://www.iconarchive.com/show/agriculture-icons-by-xaml-icon-studio/Sunflower-icon.html).
 Copyright holder [http://www.xaml-icon-studio.com](http://www.xaml-icon-studio.com). It is free for non-commercial
