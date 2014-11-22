@@ -426,8 +426,7 @@ public class CurrentFragment extends Fragment {
         	final String APIVersion = localContext.getResources().getString(R.string.api_version);
             final String urlAPI = localContext.getResources().getString(R.string.uri_api_weather_today);
             final String url = weatherService.createURIAPICurrent(urlAPI, APIVersion, latitude, longitude);
-            final String urlWithoutCache = url.concat("&time=" + System.currentTimeMillis());
-            final String jsonData = HTTPClient.retrieveDataAsString(new URL(urlWithoutCache));
+            final String jsonData = HTTPClient.retrieveDataAsString(new URL(url));
 
             return weatherService.retrieveCurrentFromJPOS(jsonData);
         }
