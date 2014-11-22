@@ -401,8 +401,6 @@ public class PreferencesFragment extends PreferenceFragment implements OnSharedP
 
         final AlarmManager alarmMgr =
         		(AlarmManager) this.getActivity().getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        // TODO: better use some string instead of .class? In case I change the service class
-        // this could be a problem (I guess)
         final Intent serviceIntent =
         		new Intent(this.getActivity().getApplicationContext(), NotificationIntentService.class);
         final PendingIntent alarmIntent =
