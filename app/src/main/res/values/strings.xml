@@ -63,7 +63,6 @@
     <string name="weather_preferences_update_time_rate_human_value_one_hour">one hour</string>
     <string name="weather_preferences_update_time_rate_human_value_half_day">half day</string>
     <string name="weather_preferences_update_time_rate_human_value_one_day">one day</string>
-    <string name="weather_preferences_refresh_interval_human_value_five_minutes">five minutes</string>
     <string name="weather_preferences_refresh_interval_human_value_fifteen_minutes">fifteen minutes</string>
     <string name="weather_preferences_refresh_interval_human_value_half_hour">half hour</string>
     <string name="weather_preferences_refresh_interval_human_value_one_hour">one hour</string>
@@ -156,7 +155,6 @@
     <string name="update_time_rate_3600">3600</string>
     <string name="update_time_rate_43200">43200</string>
     <string name="update_time_rate_86400">86400</string>
-    <string name="refresh_interval_300000">300000</string>
     <string name="refresh_interval_900000">900000</string>
     <string name="refresh_interval_1800000">1800000</string>
     <string name="refresh_interval_3600000">3600000</string>

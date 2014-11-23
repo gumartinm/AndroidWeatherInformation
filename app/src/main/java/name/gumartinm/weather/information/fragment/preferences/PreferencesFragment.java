@@ -125,8 +125,6 @@ public class PreferencesFragment extends PreferenceFragment implements OnSharedP
             humanValue = humanValues[4];
         } else if (value.equals(values[5])) {
             humanValue = humanValues[5];
-        } else if (value.equals(values[6])) {
-            humanValue = humanValues[6];
         }
         connectionPref.setSummary(humanValue);
 
@@ -299,8 +297,6 @@ public class PreferencesFragment extends PreferenceFragment implements OnSharedP
                 humanValue = humanValues[4];
             } else if (value.equals(values[5])) {
                 humanValue = humanValues[5];
-            } else if (value.equals(values[6])) {
-                humanValue = humanValues[6];
             }
             connectionPref.setSummary(humanValue);
             return;

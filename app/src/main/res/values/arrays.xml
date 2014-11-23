@@ -40,7 +40,6 @@
         <item>@string/weather_preferences_update_time_rate_human_value_one_day</item>
     </string-array>
     <string-array name="weather_preferences_refresh_interval">
-        <item>@string/refresh_interval_300000</item>
         <item>@string/refresh_interval_900000</item>
         <item>@string/refresh_interval_1800000</item>
         <item>@string/refresh_interval_3600000</item>
@@ -49,7 +48,6 @@
         <item>@string/refresh_interval_86400000</item>
     </string-array>
     <string-array name="weather_preferences_refresh_interval_human_value">
-        <item>@string/weather_preferences_refresh_interval_human_value_five_minutes</item>
         <item>@string/weather_preferences_refresh_interval_human_value_fifteen_minutes</item>
         <item>@string/weather_preferences_refresh_interval_human_value_half_hour</item>
         <item>@string/weather_preferences_refresh_interval_human_value_one_hour</item>

@@ -29,7 +29,7 @@
         android:entryValues="@array/weather_preferences_refresh_interval"
         android:selectable="true"
         android:persistent="true"
-        android:defaultValue="300000"
+        android:defaultValue="@string/refresh_interval_900000"
         android:summary="five minutes" />
     <PreferenceCategory android:title="@string/weather_preferences_units">
         <ListPreference android:key="@string/weather_preferences_temperature_key"
