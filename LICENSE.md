@@ -1,8 +1,8 @@
 # Legal information
 
-## WeatherInformation
+## Weather Information
 
-**WeatherInformation** is licensed under the Apache License, Version 2.0.  The full text
+**Weather Information** is licensed under the Apache License, Version 2.0.  The full text
 of the license can be found in:
 
  - LICENSE
@@ -25,7 +25,7 @@ applies to the following file:
 
 ## [Jackson](http://wiki.fasterxml.com/JacksonHome)
 
-WeatherInformation uses **jackson-core-2.3.3.jar** library, which is licensed under the
+Weather Information uses **jackson-core-2.3.3.jar** library, which is licensed under the
 Apache License, Version 2.0. The license is located in the following path:
 
  - app/src/main/assets/jackson-license.txt
@@ -33,7 +33,7 @@ Apache License, Version 2.0. The license is located in the following path:
 
 ## [GNOME Project](http://www.gnome.org)
 
-WeatherInformation makes use of [gnome-icon-theme-symbolic](https://github.com/GNOME/gnome-icon-theme-symbolic) that
+Weather Information makes use of [gnome-icon-theme-symbolic](https://github.com/GNOME/gnome-icon-theme-symbolic) that
 was licensed under the Creative Commons Attribution-Share Alike 3.0 United States License. This license
 can be found in the following path:
 
@@ -76,9 +76,9 @@ The Android Open Source Project. The license can be found in this path:
 
 ## [Google Play Services](https://developer.android.com/google/play-services/index.html)
 
-WeatherInformation uses the Google Play Services API and libraries.
+Weather Information uses the Google Play Services API and libraries.
 
 ## [OpenWeatherMap](http://openweathermap.org/)
 
-WeatherInformation could not work without OpenWeatherMap. It is licensed under the Creative Commons
+Weather Information could not work without OpenWeatherMap. It is licensed under the Creative Commons
 Attribution-Share Alike 2.0 Generic License. This license can be found at this url: [http://creativecommons.org/licenses/by-sa/2.0/](http://creativecommons.org/licenses/by-sa/2.0/)
