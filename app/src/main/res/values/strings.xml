@@ -150,7 +150,7 @@
     <string name="application_source_code_url">https://github.com/gumartinm/AndroidWeatherInformation</string>
     <string name="my_url">http://gumartinm.name</string>
     <string name="openweathermap_url">http://openweathermap.org/</string>
-    <string name="http_client_agent">Android WeatherInformation Agent</string>
+    <string name="http_client_agent">Android Weather Information Agent</string>
     <string name="update_time_rate_900">900</string>
     <string name="update_time_rate_1800">1800</string>
     <string name="update_time_rate_3600">3600</string>
