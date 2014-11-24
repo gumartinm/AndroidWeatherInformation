@@ -18,9 +18,10 @@ The logo, action bar and notification icon used by this application were provide
 taken from this url: [http://www.iconarchive.com/show/agriculture-icons-by-xaml-icon-studio/Sunflower-icon.html](http://www.iconarchive.com/show/agriculture-icons-by-xaml-icon-studio/Sunflower-icon.html).
 Copyright holder [http://www.xaml-icon-studio.com](http://www.xaml-icon-studio.com). It is free for non-commercial
 use but you may not use this file without the explicit consent from the copyright holder. This license
-applies to the following file:
+applies to the following files:
 
  * ic_launcher.png
+ * logo.png
 
 
 ## [Jackson](http://wiki.fasterxml.com/JacksonHome)
