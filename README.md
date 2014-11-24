@@ -11,7 +11,7 @@ Features:
  * One widget displaying the current weather conditions is available for the home and lock screens (widget updates weather data once every 60 minutes)
  * Turn on location access on your device and Weather Information will be able to find out your current location.
  * Notifications for the current weather conditions can be turned on and off.
- * You can change the units of measurement for the weather data in the preferences dialog.
+ * You can change the units of measurement for the weather data in the preferences window.
  * Weather Information allows you to modify the refresh interval for the displayed data and the notifications (depending on your cell phone plan you might want to increase or decrease the refresh interval in order to save money)
  * Until fourteen days forecast.
  * No ads, this application is completely for free.
@@ -75,6 +75,13 @@ Weather Information allows you to change a couple of parameters of your widget: 
 Besides, instead of waiting for the automatic refresh (for the widget it is every 60 minutes) you can press the *Refresh* button and the displayed weather data will be updated.
 
 ![widget_settings](screenshots/widget_settings.png)
+
+
+## Notifications
+
+From the settings window you can enable or disable notifications. When notifications are turned on, Weather Information will try to retrieve current weather data from the OpenWeatherMap servers. You can choose the refresh interval in the preferences window.
+
+![notifications](screenshots/notifications.png)
 
 
 ## Notice about missing OpenWeatherMap application ID
