@@ -70,7 +70,9 @@ Just a simple widget with the current weather conditions. You can use it for the
 
 ## Widget preferences
 
-Weather Information allows you to change a couple of parameters of your widget: you can decide whether to show the country field or not and the units of measurement can also be changed. Instead of waiting for the automatic refresh (for the widget it is every 60 minutes) you can press the *Refresh* button and the displayed weather data will be updated.
+Weather Information allows you to change a couple of parameters of your widget: you can decide whether to show the country field or not and the units of measurement can also be changed.
+
+Besides, instead of waiting for the automatic refresh (for the widget it is every 60 minutes) you can press the *Refresh* button and the displayed weather data will be updated.
 
 ![widget_settings](screenshots/widget_settings.png)
 
