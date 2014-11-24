@@ -18,7 +18,7 @@ Features:
  * Weather Information is an open source application, what means, you can download and mofify the source code (Apache License, Version 2.0). Indeed, we encourage you to do it.
 
 
-Weather data are provided by **[OpenWeatherMap]**(http://openweathermap.org/). OpenWeatherMap developers recommend to obtain an [API key](http://openweathermap.org/appid), this key can be added in the preferences window of the application. There are different [prices](http://openweathermap.org/price) (from free to enterprise) depending on the availability and reliability of the weather data. It is up to you which one to use.
+Weather data are provided by [**OpenWeatherMap**](http://openweathermap.org/). OpenWeatherMap developers recommend to obtain an [API key](http://openweathermap.org/appid), this key can be added in the preferences window of the application. There are different [prices](http://openweathermap.org/price) (from free to enterprise) depending on the availability and reliability of the weather data. It is up to you which one to use.
 **If you have an API key, be careful when using this application in public networks because everyone connected to that network could see your private API key** (Weather Information is using plain HTTP connections for retrieving data from OpenWeatherMap servers)
 
 
