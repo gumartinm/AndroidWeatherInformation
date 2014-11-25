@@ -94,8 +94,8 @@
     <string name="weather_preferences_pressure_human_value_standard_atm">standard atmosphere</string>
     <string name="weather_preferences_app_id">API Key</string>
     <string name="weather_preferences_app_id_text">OpenWeatherMap API Key</string>
-    <!-- DO NOT TRANSLATE -->
     <string name="weather_preferences_app_id_text_empty_key">value not found</string>
+    <!-- DO NOT TRANSLATE -->
     <string name="weather_preferences_app_id_key">weather_preferences_app_id_key</string>
     <string name="weather_preferences_pressure_key">weather_preferences_pressure</string>
     <string name="weather_preferences_wind_key">weather_preferences_wind</string>
