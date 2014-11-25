@@ -19,7 +19,7 @@ taken from this url: [http://www.iconarchive.com/show/agriculture-icons-by-xaml-
 Copyright holder [http://www.xaml-icon-studio.com](http://www.xaml-icon-studio.com). It is free for non-commercial
 use but you may not use this file without the explicit consent from the copyright holder.
 
-Copyright applies to the following files:
+Copyright applies to the following files in any path of this project:
 
  * ic_launcher.png
  * logo.png
@@ -41,7 +41,7 @@ can be found in the following path:
 
  - app/src/main/assets/gnome-icon-license.txt
 
-It applies to the following files:
+It applies to the following files in any path of this project:
 
  * weather_clear_night.png
  * weather_clear.png
