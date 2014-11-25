@@ -2,7 +2,7 @@ Weather Information
 =========================
 
 <p align="center">
-  <img src="screenshots/logo.png?raw=true" alt="Sublime's custom image"/>
+  <img src="screenshots/logo.png?raw=true" alt="Weather Information's logo"/>
 </p>
 
 Weather Information is a simple and made for fun Android application for displaying current weather conditions and weather forecast worldwide. It implements a simple and clear user interface by means of default Android layouts and libraries.
