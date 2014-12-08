@@ -27,7 +27,6 @@ import android.net.Uri;
 import android.net.http.AndroidHttpClient;
 import android.preference.PreferenceManager;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -41,6 +40,7 @@ import name.gumartinm.weather.information.parser.JPOSCurrentParser;
 import name.gumartinm.weather.information.service.IconsList;
 import name.gumartinm.weather.information.service.PermanentStorage;
 import name.gumartinm.weather.information.service.ServiceCurrentParser;
+import timber.log.Timber;
 
 import org.apache.http.client.ClientProtocolException;
 
@@ -53,7 +53,6 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class WidgetIntentService extends IntentService {
-	private static final String TAG = "WidgetIntentService";
     private static final String WIDGET_PREFERENCES_NAME = "WIDGET_PREFERENCES";
 
 	public WidgetIntentService() {
@@ -153,16 +152,16 @@ public class WidgetIntentService extends IntentService {
 			return this.getRemoteCurrentThrowable(weatherLocation, HTTPClient, weatherService);
 
 		} catch (final JsonParseException e) {
-			Log.e(TAG, "doInBackground exception: ", e);
+            Timber.e(e, "doInBackground exception: ");
 		} catch (final ClientProtocolException e) {
-			Log.e(TAG, "doInBackground exception: ", e);
+            Timber.e(e, "doInBackground exception: ");
 		} catch (final MalformedURLException e) {
-			Log.e(TAG, "doInBackground exception: ", e);
+            Timber.e(e, "doInBackground exception: ");
 		} catch (final URISyntaxException e) {
-			Log.e(TAG, "doInBackground exception: ", e);
+            Timber.e(e, "doInBackground exception: ");
 		} catch (final IOException e) {
 			// logger infrastructure swallows UnknownHostException :/
-			Log.e(TAG, "doInBackground exception: " + e.getMessage(), e);
+            Timber.e(e, "doInBackground exception: " + e.getMessage());
 		} finally {
 			HTTPClient.close();
 		}

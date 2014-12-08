@@ -43,7 +43,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -61,6 +60,7 @@ import name.gumartinm.weather.information.service.PermanentStorage;
 import name.gumartinm.weather.information.service.ServiceForecastParser;
 import name.gumartinm.weather.information.service.conversor.TempUnitsConversor;
 import name.gumartinm.weather.information.service.conversor.UnitsConversor;
+import timber.log.Timber;
 
 public class OverviewFragment extends ListFragment {
     private static final String TAG = "OverviewFragment";
@@ -329,16 +329,16 @@ public class OverviewFragment extends ListFragment {
             try {
                 forecast = this.doInBackgroundThrowable(latitude, longitude);
             } catch (final JsonParseException e) {
-                Log.e(TAG, "OverviewTask doInBackground exception: ", e);
+                Timber.e(e, "OverviewTask doInBackground exception: ");
             } catch (final ClientProtocolException e) {
-                Log.e(TAG, "OverviewTask doInBackground exception: ", e);
+                Timber.e(e, "OverviewTask doInBackground exception: ");
             } catch (final MalformedURLException e) {
-                Log.e(TAG, "OverviewTask doInBackground exception: ", e);
+                Timber.e(e, "OverviewTask doInBackground exception: ");
             } catch (final URISyntaxException e) {
-                Log.e(TAG, "OverviewTask doInBackground exception: ", e);
+                Timber.e(e, "OverviewTask doInBackground exception: ");
             } catch (final IOException e) {
                 // logger infrastructure swallows UnknownHostException :/
-                Log.e(TAG, "OverviewTask doInBackground exception: " + e.getMessage(), e);
+                Timber.e(e, "OverviewTask doInBackground exception: " + e.getMessage());
             } finally {
             	HTTPClient.close();
             }

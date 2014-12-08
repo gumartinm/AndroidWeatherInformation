@@ -40,7 +40,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,9 +62,9 @@ import name.gumartinm.weather.information.service.conversor.TempUnitsConversor;
 import name.gumartinm.weather.information.service.conversor.UnitsConversor;
 import name.gumartinm.weather.information.service.conversor.WindUnitsConversor;
 import name.gumartinm.weather.information.widget.WidgetProvider;
+import timber.log.Timber;
 
 public class CurrentFragment extends Fragment {
-    private static final String TAG = "CurrentFragment";
     private static final String BROADCAST_INTENT_ACTION = "name.gumartinm.weather.information.UPDATECURRENT";
     private BroadcastReceiver mReceiver;
 
@@ -403,16 +402,16 @@ public class CurrentFragment extends Fragment {
             try {
             	current = this.doInBackgroundThrowable(latitude, longitude);
             } catch (final JsonParseException e) {
-                Log.e(TAG, "CurrentTask doInBackground exception: ", e);
+                Timber.e(e, "CurrentTask doInBackground exception: ");
             } catch (final ClientProtocolException e) {
-                Log.e(TAG, "CurrentTask doInBackground exception: ", e);
+                Timber.e(e, "CurrentTask doInBackground exception: ");
             } catch (final MalformedURLException e) {
-                Log.e(TAG, "CurrentTask doInBackground exception: ", e);
+                Timber.e(e, "CurrentTask doInBackground exception: ");
             } catch (final URISyntaxException e) {
-                Log.e(TAG, "CurrentTask doInBackground exception: ", e);
+                Timber.e(e, "CurrentTask doInBackground exception: ");
             } catch (final IOException e) {
                 // logger infrastructure swallows UnknownHostException :/
-                Log.e(TAG, "CurrentTask doInBackground exception: " + e.getMessage(), e);
+                Timber.e(e, "CurrentTask doInBackground exception: " + e.getMessage());
             } finally {
             	HTTPClient.close();
             }

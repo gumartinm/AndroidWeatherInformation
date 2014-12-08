@@ -33,6 +33,14 @@ Apache License, Version 2.0. The license is located in the following path:
  - app/src/main/assets/jackson-license.txt
 
 
+## [timber](https://github.com/JakeWharton/timber)
+
+Weather Information makes use of **timber-2.5.0.jar** library, which is licensed under the
+Apache License, Version 2.0. The license is located in the following path:
+
+ - app/src/main/assets/timber-license.txt
+
+
 ## [GNOME Project](http://www.gnome.org)
 
 Weather Information makes use of [gnome-icon-theme-symbolic](https://github.com/GNOME/gnome-icon-theme-symbolic) that

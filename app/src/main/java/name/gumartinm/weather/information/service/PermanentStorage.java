@@ -26,14 +26,13 @@ import java.io.StreamCorruptedException;
 import java.text.MessageFormat;
 
 import android.content.Context;
-import android.util.Log;
 
 import name.gumartinm.weather.information.model.currentweather.Current;
 import name.gumartinm.weather.information.model.forecastweather.Forecast;
+import timber.log.Timber;
 
 
 public class PermanentStorage {
-	private static final String TAG = "PermanentStorage";
     private static final String CURRENT_DATA_FILE = "current.file";
     private static final String FORECAST_DATA_FILE = "forecast.file";
     private static final String WIDGET_CURRENT_DATA_FILE = "current.{0}.file";
@@ -48,9 +47,9 @@ public class PermanentStorage {
         try {
 			this.saveObject(CURRENT_DATA_FILE, current);
 		} catch (FileNotFoundException e) {
-			Log.e(TAG, "saveCurrent exception: ", e);
+			Timber.e(e, "saveCurrent exception: ");
 		} catch (IOException e) {
-			Log.e(TAG, "saveCurrent exception: ", e);
+            Timber.e(e, "saveCurrent exception: ");
 		}
     }
 
@@ -59,13 +58,13 @@ public class PermanentStorage {
     	try {
 			return (Current) this.getObject(CURRENT_DATA_FILE);
 		} catch (final StreamCorruptedException e) {
-			Log.e(TAG, "getCurrent exception: ", e);
+            Timber.e(e, "getCurrent exception: ");
 		} catch (final FileNotFoundException e) {
-			Log.e(TAG, "getCurrent exception: ", e);
+            Timber.e(e, "getCurrent exception: ");
 		} catch (final IOException e) {
-			Log.e(TAG, "getCurrent exception: ", e);
+            Timber.e(e, "getCurrent exception: ");
 		} catch (final ClassNotFoundException e) {
-			Log.e(TAG, "getCurrent exception: ", e);
+            Timber.e(e, "getCurrent exception: ");
 		}
     	
     	return null;
@@ -77,9 +76,9 @@ public class PermanentStorage {
         try {
             this.saveObject(fileName, current);
         } catch (FileNotFoundException e) {
-            Log.e(TAG, "saveWidgetCurrentData exception: ", e);
+            Timber.e(e, "saveWidgetCurrentData exception: ");
         } catch (IOException e) {
-            Log.e(TAG, "saveWidgetCurrentData exception: ", e);
+            Timber.e(e, "saveWidgetCurrentData exception: ");
         }
     }
 
@@ -89,13 +88,13 @@ public class PermanentStorage {
         try {
             return (Current) this.getObject(fileName);
         } catch (final StreamCorruptedException e) {
-            Log.e(TAG, "getWidgetCurrentData exception: ", e);
+            Timber.e(e, "getWidgetCurrentData exception: ");
         } catch (final FileNotFoundException e) {
-            Log.e(TAG, "getWidgetCurrentData exception: ", e);
+            Timber.e(e, "getWidgetCurrentData exception: ");
         } catch (final IOException e) {
-            Log.e(TAG, "getWidgetCurrentData exception: ", e);
+            Timber.e(e, "getWidgetCurrentData exception: ");
         } catch (final ClassNotFoundException e) {
-            Log.e(TAG, "getWidgetCurrentData exception: ", e);
+            Timber.e(e, "getWidgetCurrentData exception: ");
         }
 
         return null;
@@ -113,9 +112,9 @@ public class PermanentStorage {
     	try {
 			this.saveObject(FORECAST_DATA_FILE, forecast);
 		} catch (FileNotFoundException e) {
-			Log.e(TAG, "saveForecast exception: ", e);
+            Timber.e(e, "saveForecast exception: ");
 		} catch (IOException e) {
-			Log.e(TAG, "saveForecast exception: ", e);
+            Timber.e(e, "saveForecast exception: ");
 		}
     }
 
@@ -124,13 +123,13 @@ public class PermanentStorage {
     	try {
 			return (Forecast) this.getObject(FORECAST_DATA_FILE);
 		} catch (final StreamCorruptedException e) {
-			Log.e(TAG, "getForecast exception: ", e);
+            Timber.e(e, "getForecast exception: ");
 		} catch (final FileNotFoundException e) {
-			Log.e(TAG, "getForecast exception: ", e);
+            Timber.e(e, "getForecast exception: ");
 		} catch (final IOException e) {
-			Log.e(TAG, "getForecast exception: ", e);
+            Timber.e(e, "getForecast exception: ");
 		} catch (final ClassNotFoundException e) {
-			Log.e(TAG, "getForecast exception: ", e);
+            Timber.e(e, "getForecast exception: ");
 		}
     	
     	return null;

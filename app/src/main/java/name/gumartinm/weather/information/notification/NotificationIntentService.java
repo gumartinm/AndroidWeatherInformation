@@ -37,7 +37,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -52,11 +51,10 @@ import name.gumartinm.weather.information.service.IconsList;
 import name.gumartinm.weather.information.service.ServiceCurrentParser;
 import name.gumartinm.weather.information.service.conversor.TempUnitsConversor;
 import name.gumartinm.weather.information.service.conversor.UnitsConversor;
+import timber.log.Timber;
 
 
 public class NotificationIntentService extends IntentService {
-    private static final String TAG = "NotificationIntentService";
-
 
     public NotificationIntentService() {
         super("NIS-Thread");
@@ -77,16 +75,16 @@ public class NotificationIntentService extends IntentService {
             	current = this.doInBackgroundThrowable(weatherLocation, HTTPClient, weatherService);
                 
             } catch (final JsonParseException e) {
-                Log.e(TAG, "doInBackground exception: ", e);
+                Timber.e(e, "doInBackground exception: ");
             } catch (final ClientProtocolException e) {
-                Log.e(TAG, "doInBackground exception: ", e);
+                Timber.e(e, "doInBackground exception: ");
             } catch (final MalformedURLException e) {
-                Log.e(TAG, "doInBackground exception: ", e);
+                Timber.e(e, "doInBackground exception: ");
             } catch (final URISyntaxException e) {
-                Log.e(TAG, "doInBackground exception: ", e);
+                Timber.e(e, "doInBackground exception: ");
             } catch (final IOException e) {
                 // logger infrastructure swallows UnknownHostException :/
-                Log.e(TAG, "doInBackground exception: " + e.getMessage(), e);
+                Timber.e(e, "doInBackground exception: " + e.getMessage());
             } finally {
                 HTTPClient.close();
             }

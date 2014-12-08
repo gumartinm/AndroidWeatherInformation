@@ -18,10 +18,10 @@ package name.gumartinm.weather.information.model;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
+import timber.log.Timber;
 
 public class WeatherLocationDbHelper extends SQLiteOpenHelper {
-	private static final String TAG = "LocationDbHelper";
 	public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "Location.db";
     
@@ -46,7 +46,7 @@ public class WeatherLocationDbHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+        Timber.w("Upgrading database from version " + oldVersion + " to "
                 + newVersion + ", which will destroy all old data");
 
         // Kills the table and existing data

@@ -18,11 +18,11 @@ package name.gumartinm.weather.information.activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.WebView;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import name.gumartinm.weather.information.R;
+import timber.log.Timber;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +32,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 public class LicensesActivity extends Activity {
-    private static final String TAG = "LicensesActivity";
     private WebView mWebView;
 
 
@@ -57,9 +56,9 @@ public class LicensesActivity extends Activity {
             stringBuilder.append(googlePlayServices).append("</pre>").append("</body>").append("</html>");
             mWebView.loadDataWithBaseURL(null, stringBuilder.toString(), "text/html", "UTF-8", null);
         } catch (final UnsupportedEncodingException e) {
-            Log.e(TAG, "Load data error", e);
+            Timber.e(e, "Load data error");
         } catch (final IOException e) {
-            Log.e(TAG, "Load data error", e);
+            Timber.e(e, "Load data error");
         }
     }
 

@@ -26,13 +26,13 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import name.gumartinm.weather.information.R;
 import name.gumartinm.weather.information.model.WeatherLocation;
+import timber.log.Timber;
 
 /**
  * {@link http://www.androiddesignpatterns.com/2013/04/retaining-objects-across-config-changes.html}
@@ -112,7 +112,6 @@ public class MapProgressFragment extends Fragment {
 	}
     
     private class GetAddressTask extends AsyncTask<Object, Void, WeatherLocation> {
-        private static final String TAG = "GetAddressTask";
         // Store the context passed to the AsyncTask when the system instantiates it.
         private final Context localContext;
 
@@ -129,7 +128,7 @@ public class MapProgressFragment extends Fragment {
             try {
             	weatherLocation = this.getLocation(latitude, longitude);
             } catch (final Throwable e) { // Hopefully nothing goes wrong because of catching Throwable.
-                Log.e(TAG, "GetAddressTask doInBackground exception: ", e);
+                Timber.e(e, "GetAddressTask doInBackground exception: ");
             }
 
             return weatherLocation;
