@@ -28,6 +28,6 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:+'
     compile 'com.google.android.gms:play-services:+'
-    compile files('libs/jackson-core-2.3.3.jar')
+    compile 'com.fasterxml.jackson.core:jackson-core:2.3.3'
     compile 'com.jakewharton.timber:timber:2.5.0'
 }
