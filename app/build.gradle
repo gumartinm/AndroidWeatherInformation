@@ -4,7 +4,7 @@ android {
     signingConfigs {
     }
     compileSdkVersion 18
-    buildToolsVersion "20.0.0"
+    buildToolsVersion '21.1.1'
     defaultConfig {
         applicationId "name.gumartinm.weather.information"
         minSdkVersion 11
