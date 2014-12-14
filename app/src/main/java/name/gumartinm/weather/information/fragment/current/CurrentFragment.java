@@ -380,7 +380,7 @@ public class CurrentFragment extends Fragment {
     	return false;
     }
 
-    private class CurrentTask extends AsyncTask<Object, Void, Current> {
+    private static class CurrentTask extends AsyncTask<Object, Void, Current> {
     	// Store the context passed to the AsyncTask when the system instantiates it.
         private final Context localContext;
         final CustomHTTPClient HTTPClient;

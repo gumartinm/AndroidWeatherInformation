@@ -306,7 +306,7 @@ public class OverviewFragment extends ListFragment {
     	return false;
     }
 
-    private class OverviewTask extends AsyncTask<Object, Void, Forecast> {
+    private static class OverviewTask extends AsyncTask<Object, Void, Forecast> {
     	// Store the context passed to the AsyncTask when the system instantiates it.
         private final Context localContext;
         private final CustomHTTPClient HTTPClient;
