@@ -2,6 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
+        releaseSigning {
+            keyAlias ''
+            keyPassword ''
+            storeFile file('')
+            storePassword ''
+        }
     }
     compileSdkVersion 18
     buildToolsVersion '21.1.1'
@@ -18,6 +24,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             buildConfigField "boolean", "DEBUG_MODE", "false"
+            signingConfig signingConfigs.releaseSigning
         }
         debug {
             buildConfigField "boolean", "DEBUG_MODE", "true"
