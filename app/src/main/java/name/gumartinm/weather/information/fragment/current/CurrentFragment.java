@@ -115,32 +115,31 @@ public class CurrentFragment extends Fragment {
 				if (action.equals(BROADCAST_INTENT_ACTION)) {
 					final Current currentRemote = (Current) intent.getSerializableExtra("current");
 
-					if (currentRemote != null) {
+					// 1. Check conditions. They must be the same as the ones that triggered the AsyncTask.
+					final DatabaseQueries query = new DatabaseQueries(context.getApplicationContext());
+			        final WeatherLocation weatherLocation = query.queryDataBase();
+			        final PermanentStorage store = new PermanentStorage(context.getApplicationContext());
+			        final Current current = store.getCurrent();
 
-						// 1. Check conditions. They must be the same as the ones that triggered the AsyncTask.
-						final DatabaseQueries query = new DatabaseQueries(context.getApplicationContext());
-			            final WeatherLocation weatherLocation = query.queryDataBase();
-			            final PermanentStorage store = new PermanentStorage(context.getApplicationContext());
-			            final Current current = store.getCurrent();
+			        if (current == null || !CurrentFragment.this.isDataFresh(weatherLocation.getLastCurrentUIUpdate())) {
 
-			            if (current == null || !CurrentFragment.this.isDataFresh(weatherLocation.getLastCurrentUIUpdate())) {
-			            	// 2. Update UI.
-			            	CurrentFragment.this.updateUI(currentRemote);
+                        if (currentRemote != null) {
+                            // 2. Update UI.
+                            CurrentFragment.this.updateUI(currentRemote);
 
-			            	// 3. Update current data.
-							store.saveCurrent(currentRemote);
+                            // 3. Update current data.
+                            store.saveCurrent(currentRemote);
 
                             // 4. Update location data.
                             weatherLocation.setLastCurrentUIUpdate(new Date());
                             query.updateDataBase(weatherLocation);
-			            }
-
-					} else {
-						// Empty UI and show error message
-						CurrentFragment.this.getActivity().findViewById(R.id.weather_current_data_container).setVisibility(View.GONE);
-						CurrentFragment.this.getActivity().findViewById(R.id.weather_current_progressbar).setVisibility(View.GONE);
-						CurrentFragment.this.getActivity().findViewById(R.id.weather_current_error_message).setVisibility(View.VISIBLE);
-					}
+                        } else {
+                            // Empty UI and show error message
+                            CurrentFragment.this.getActivity().findViewById(R.id.weather_current_data_container).setVisibility(View.GONE);
+                            CurrentFragment.this.getActivity().findViewById(R.id.weather_current_progressbar).setVisibility(View.GONE);
+                            CurrentFragment.this.getActivity().findViewById(R.id.weather_current_error_message).setVisibility(View.VISIBLE);
+                        }
+			        }
 				}
 			}
         };
@@ -412,6 +411,10 @@ public class CurrentFragment extends Fragment {
             } catch (final IOException e) {
                 // logger infrastructure swallows UnknownHostException :/
                 Timber.e(e, "CurrentTask doInBackground exception: " + e.getMessage());
+            } catch (final Throwable e) {
+                // I loathe doing this but we must show some error to our dear user by means
+                // of returning Forecast null value.
+                Timber.e(e, "CurrentTask doInBackground exception: ");
             } finally {
             	HTTPClient.close();
             }

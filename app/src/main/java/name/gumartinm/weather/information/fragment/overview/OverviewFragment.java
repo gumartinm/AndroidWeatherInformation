@@ -107,17 +107,17 @@ public class OverviewFragment extends ListFragment {
 				if (action.equals(BROADCAST_INTENT_ACTION)) {
 					final Forecast forecastRemote = (Forecast) intent.getSerializableExtra("forecast");
 
-					if (forecastRemote != null) {
+				    // 1. Check conditions. They must be the same as the ones that triggered the AsyncTask.
+					final DatabaseQueries query = new DatabaseQueries(context.getApplicationContext());
+			        final WeatherLocation weatherLocation = query.queryDataBase();
+			        final PermanentStorage store = new PermanentStorage(context.getApplicationContext());
+			        final Forecast forecast = store.getForecast();
 
-						// 1. Check conditions. They must be the same as the ones that triggered the AsyncTask.
-						final DatabaseQueries query = new DatabaseQueries(context.getApplicationContext());
-			            final WeatherLocation weatherLocation = query.queryDataBase();
-			            final PermanentStorage store = new PermanentStorage(context.getApplicationContext());
-			            final Forecast forecast = store.getForecast();
+				    if (forecast == null || !OverviewFragment.this.isDataFresh(weatherLocation.getLastForecastUIUpdate())) {
 
-				        if (forecast == null || !OverviewFragment.this.isDataFresh(weatherLocation.getLastForecastUIUpdate())) {
-				        	// 2. Update UI.
-				        	OverviewFragment.this.updateUI(forecastRemote);
+                        if (forecastRemote != null) {
+				            // 2. Update UI.
+				            OverviewFragment.this.updateUI(forecastRemote);
 
 				        	// 3. Update Data.
 				        	store.saveForecast(forecastRemote);
@@ -126,13 +126,12 @@ public class OverviewFragment extends ListFragment {
 
 				            // 4. Show list.
 				            OverviewFragment.this.setListShownNoAnimation(true);
-				        }
-
-					} else {
-						// Empty list and show error message (see setEmptyText in onCreate)
-						OverviewFragment.this.setListAdapter(null);
-						OverviewFragment.this.setListShownNoAnimation(true);
-					}
+                        } else {
+                            // Empty list and show error message (see setEmptyText in onCreate)
+                            OverviewFragment.this.setListAdapter(null);
+                            OverviewFragment.this.setListShownNoAnimation(true);
+                        }
+				    }
 				}
 			}
         };
@@ -339,6 +338,10 @@ public class OverviewFragment extends ListFragment {
             } catch (final IOException e) {
                 // logger infrastructure swallows UnknownHostException :/
                 Timber.e(e, "OverviewTask doInBackground exception: " + e.getMessage());
+            } catch (final Throwable e) {
+                // I loathe doing this but we must show some error to our dear user by means
+                // of returning Forecast null value.
+                Timber.e(e, "OverviewTask doInBackground exception: ");
             } finally {
             	HTTPClient.close();
             }
