@@ -38,8 +38,13 @@ public class WeatherInformationApp extends Application {
         if (BuildConfig.DEBUG_MODE) {
             Timber.plant(new Timber.DebugTree());
         } else {
-            Timber.plant(new GoogleAnalyticsReportingTree(
-                    new GoogleAnalyticsTrackers(this.getApplicationContext())));
+            // Trying to avoid this bug: https://code.google.com/p/android/issues/detail?id=82157
+            // When Google fixes the bug I will be able to rely on the AndroidManifest.xml configuration.
+            final GoogleAnalyticsTrackers analyticsTrackers =
+                    new GoogleAnalyticsTrackers(this.getApplicationContext());
+            analyticsTrackers.setGlobalTracker();
+
+            Timber.plant(new GoogleAnalyticsReportingTree(analyticsTrackers));
         }
     }
 
@@ -47,6 +52,7 @@ public class WeatherInformationApp extends Application {
 
         private enum TrackerName {
             EXCEPTIONS_TRACKER, // Tracker used when logging caught exceptions in this app.
+            GLOBAL_TRACKER,     // Tracker used when logging uncaught exception in this app.
         };
 
         private final HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
@@ -54,6 +60,14 @@ public class WeatherInformationApp extends Application {
 
         private GoogleAnalyticsTrackers(final Context appContext) {
             this.appContext = appContext;
+        }
+
+        /**
+         * Trying to avoid this bug: https://code.google.com/p/android/issues/detail?id=82157
+         * When Google fixes the bug I will be able to rely on the AndroidManifest.xml configuration.
+         */
+        private void setGlobalTracker() {
+            this.getTracker(TrackerName.GLOBAL_TRACKER);
         }
 
         /**
@@ -68,6 +82,8 @@ public class WeatherInformationApp extends Application {
 
                 final Tracker t = (trackerId == TrackerName.EXCEPTIONS_TRACKER) ?
                         analytics.newTracker(R.xml.exceptions_tracker) :
+                        (trackerId == TrackerName.GLOBAL_TRACKER) ?
+                        analytics.newTracker(R.xml.global_tracker) :
                         analytics.newTracker(R.xml.exceptions_tracker);
 
                 // Do not retrieve user's information. I strongly care about user's privacy.

@@ -171,9 +171,13 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <!--
+            Commenting out because of this bug: https://code.google.com/p/android/issues/detail?id=82157
+            The programatic way seems to work.
         <meta-data
             android:name="com.google.android.gms.analytics.globalConfigResource"
             android:resource="@xml/global_tracker" />
+        -->
 
     </application>
 
