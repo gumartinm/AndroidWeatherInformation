@@ -37,6 +37,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -57,6 +58,13 @@ public class MapActivity extends FragmentActivity implements
     // Google Play Services Map
     private GoogleMap mMap;
     private Marker mMarker;
+    // Async map loading.
+    private ButtonsUpdate mButtonsUpdate;
+    private MapUpdate mMapUpdate;
+
+    // The Android rotate screen mess and callback coming from external API (nobody knows how
+    // it was implemented, otherwise I could avoid this code)
+    private MapActivityOnMapReadyCallback mMapActivityOnMapReadyCallback;
     
     private LocationManager mLocationManager;
 
@@ -71,12 +79,8 @@ public class MapActivity extends FragmentActivity implements
         // Google Play Services Map
         final MapFragment mapFragment = (MapFragment) this.getFragmentManager()
                 .findFragmentById(R.id.weather_map_fragment_map);
-        this.mMap = mapFragment.getMap();
-        this.mMap.setMyLocationEnabled(false);
-        this.mMap.getUiSettings().setMyLocationButtonEnabled(false);
-        this.mMap.getUiSettings().setZoomControlsEnabled(true);
-        this.mMap.getUiSettings().setCompassEnabled(true);
-        this.mMap.setOnMapLongClickListener(new MapActivityOnMapLongClickListener(this));
+        this.mMapActivityOnMapReadyCallback = new MapActivityOnMapReadyCallback(this);
+        mapFragment.getMapAsync(this.mMapActivityOnMapReadyCallback);
     }
     
     @Override
@@ -183,6 +187,14 @@ public class MapActivity extends FragmentActivity implements
 		
 		this.mLocationManager.removeUpdates(this);
 	}
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        // The Android rotate screen mess.
+        this.mMapActivityOnMapReadyCallback.onDestroy();
+    }
 	
     public void onClickSaveLocation(final View v) {
     	if (this.mMarker != null) {
@@ -250,19 +262,11 @@ public class MapActivity extends FragmentActivity implements
         city.setText(weatherLocation.getCity());
         country.setText(weatherLocation.getCountry());
 
-        final LatLng point = new LatLng(weatherLocation.getLatitude(), weatherLocation.getLongitude());
-        if (this.mMarker != null) {
-        	// Just one marker on map
-        	this.mMarker.remove();
-        }
-        this.mMarker = this.mMap.addMarker(new MarkerOptions().position(point).draggable(true));
-        this.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 5));
-        this.mMap.animateCamera(CameraUpdateFactory.zoomIn());
-        this.mMap.animateCamera(CameraUpdateFactory.zoomTo(8), 2000, null);
+        this.mMapUpdate = new MapUpdate(this, weatherLocation);
+        this.mMapUpdate.doUpdate();
     }
     
     private class MapActivityOnMapLongClickListener implements OnMapLongClickListener {
-    	// Store the context passed to the AsyncTask when the system instantiates it.
         private final Context localContext;
         
     	private MapActivityOnMapLongClickListener(final Context context) {
@@ -369,11 +373,11 @@ public class MapActivity extends FragmentActivity implements
         	fragmentTransaction.add(R.id.weather_map_buttons_container, buttonsFragment, BUTTONS_FRAGMENT_TAG).commit();
         	fm.executePendingTransactions();
     	}
-    	
-    	if (this.mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-    		final Button getLocationButton = (Button) this.findViewById(R.id.weather_map_button_getlocation);
-    		getLocationButton.setEnabled(true);
-    	}
+
+        if (this.mButtonsUpdate == null) {
+            this.mButtonsUpdate = new ButtonsUpdate(this);
+        }
+        this.mButtonsUpdate.doUpdate();
 	}
 	
 	private void removeButtonsFragment() {
@@ -391,7 +395,7 @@ public class MapActivity extends FragmentActivity implements
     * 							android.location.LocationListener
     *
     *****************************************************************************************************/
-	
+
 	@Override
 	public void onLocationChanged(final Location location) {
 		// It was called from onClickGetLocation (UI thread) This method will run in the same thread (the UI thread)
@@ -400,7 +404,7 @@ public class MapActivity extends FragmentActivity implements
 		// TODO: May location not be null?
 		this.getAddressAndUpdateUI(location.getLatitude(), location.getLongitude());
 	}
-	
+
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {}
 
@@ -409,4 +413,102 @@ public class MapActivity extends FragmentActivity implements
 
 	@Override
 	public void onProviderDisabled(String provider) {}
+
+    private class MapActivityOnMapReadyCallback implements OnMapReadyCallback {
+        private MapActivity mapActivity;
+
+        private MapActivityOnMapReadyCallback(final MapActivity mapActivity) {
+            this.mapActivity = mapActivity;
+        }
+
+        @Override
+        public void onMapReady(final GoogleMap googleMap) {
+            if (this.mapActivity != null) {
+                this.mapActivity.mMap = googleMap;
+                this.mapActivity.mMap.setMyLocationEnabled(false);
+                this.mapActivity.mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                this.mapActivity.mMap.getUiSettings().setZoomControlsEnabled(true);
+                this.mapActivity.mMap.getUiSettings().setCompassEnabled(true);
+                this.mapActivity.mMap.setOnMapLongClickListener(new MapActivityOnMapLongClickListener(this.mapActivity));
+
+                if (this.mapActivity.mMapUpdate != null)  {
+                    this.mapActivity.mMapUpdate.doUpdate();
+                }
+                if (this.mapActivity.mButtonsUpdate != null) {
+                    this.mapActivity.mButtonsUpdate.doUpdate();
+                }
+            }
+        }
+
+        /**
+         * The Android rotate screen mess. Required because the Activity.isDestroyed method exists
+         * just from API level 17.
+         */
+        public void onDestroy() {
+            this.mapActivity = null;
+        }
+    }
+
+    private class MapUpdate {
+        private MapActivity mapActivity;
+        private final WeatherLocation weatherLocation;
+
+        private MapUpdate(MapActivity mapActivity, final WeatherLocation weatherLocation) {
+            this.mapActivity = mapActivity;
+            this.weatherLocation = weatherLocation;
+        }
+
+        private void doUpdate() {
+            if (this.mapActivity.mMap == null) {
+                // Do nothing.
+                return;
+            }
+
+            final LatLng point = new LatLng(this.weatherLocation.getLatitude(), this.weatherLocation.getLongitude());
+            if (this.mapActivity.mMarker != null) {
+                // Just one marker on map
+                this.mapActivity.mMarker.remove();
+            }
+            this.mapActivity.mMarker = this.mapActivity.mMap.addMarker(new MarkerOptions().position(point).draggable(true));
+            this.mapActivity.mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 5));
+            this.mapActivity.mMap.animateCamera(CameraUpdateFactory.zoomIn());
+            this.mapActivity.mMap.animateCamera(CameraUpdateFactory.zoomTo(8), 2000, null);
+        }
+
+        private WeatherLocation getLocation() {
+            return this.weatherLocation;
+        }
+    }
+
+    private class ButtonsUpdate {
+        private MapActivity mapActivity;
+
+        private ButtonsUpdate(final MapActivity mapActivity) {
+            this.mapActivity = mapActivity;
+        }
+
+        private void doUpdate() {
+            if (this.mapActivity.mMap == null) {
+                final Button getLocationButton = (Button) this.mapActivity.findViewById(R.id.weather_map_button_getlocation);
+                final Button saveLocationButton = (Button) this.mapActivity.findViewById(R.id.weather_map_button_savelocation);
+                if (getLocationButton != null) {
+                    getLocationButton.setEnabled(false);
+                }
+                if (saveLocationButton != null) {
+                    saveLocationButton.setEnabled(false);
+                }
+            } else {
+                if (this.mapActivity.mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                    final Button getLocationButton = (Button) this.mapActivity.findViewById(R.id.weather_map_button_getlocation);
+                    if (getLocationButton != null) {
+                        getLocationButton.setEnabled(true);
+                    }
+                }
+                final Button saveLocationButton = (Button) this.mapActivity.findViewById(R.id.weather_map_button_savelocation);
+                if (saveLocationButton != null) {
+                    saveLocationButton.setEnabled(true);
+                }
+            }
+        }
+    }
 }
