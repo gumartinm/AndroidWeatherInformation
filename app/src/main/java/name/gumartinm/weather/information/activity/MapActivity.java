@@ -194,6 +194,7 @@ public class MapActivity extends FragmentActivity implements
 
         // The Android rotate screen mess.
         this.mMapActivityOnMapReadyCallback.onDestroy();
+        this.mButtonsUpdate.onDestroy();
     }
 	
     public void onClickSaveLocation(final View v) {
@@ -474,10 +475,6 @@ public class MapActivity extends FragmentActivity implements
             this.mapActivity.mMap.animateCamera(CameraUpdateFactory.zoomIn());
             this.mapActivity.mMap.animateCamera(CameraUpdateFactory.zoomTo(8), 2000, null);
         }
-
-        private WeatherLocation getLocation() {
-            return this.weatherLocation;
-        }
     }
 
     private class ButtonsUpdate {
@@ -488,6 +485,11 @@ public class MapActivity extends FragmentActivity implements
         }
 
         private void doUpdate() {
+            if (this.mapActivity == null) {
+                // Do nothing
+                return;
+            }
+
             if (this.mapActivity.mMap == null) {
                 final Button getLocationButton = (Button) this.mapActivity.findViewById(R.id.weather_map_button_getlocation);
                 final Button saveLocationButton = (Button) this.mapActivity.findViewById(R.id.weather_map_button_savelocation);
@@ -509,6 +511,10 @@ public class MapActivity extends FragmentActivity implements
                     saveLocationButton.setEnabled(true);
                 }
             }
+        }
+
+        private void onDestroy() {
+            this.mapActivity = null;
         }
     }
 }
