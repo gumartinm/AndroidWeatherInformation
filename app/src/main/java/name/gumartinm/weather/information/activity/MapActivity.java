@@ -193,8 +193,15 @@ public class MapActivity extends FragmentActivity implements
         super.onDestroy();
 
         // The Android rotate screen mess.
-        this.mMapActivityOnMapReadyCallback.onDestroy();
-        this.mButtonsUpdate.onDestroy();
+        if (this.mMapActivityOnMapReadyCallback != null) {
+            this.mMapActivityOnMapReadyCallback.onDestroy();
+        }
+        if (this.mButtonsUpdate != null) {
+            this.mButtonsUpdate.onDestroy();
+        }
+        if (this.mMapUpdate != null) {
+            this.mMapUpdate.onDestroy();
+        }
     }
 	
     public void onClickSaveLocation(final View v) {
@@ -475,6 +482,14 @@ public class MapActivity extends FragmentActivity implements
             this.mapActivity.mMap.animateCamera(CameraUpdateFactory.zoomIn());
             this.mapActivity.mMap.animateCamera(CameraUpdateFactory.zoomTo(8), 2000, null);
         }
+
+        /**
+         * The Android rotate screen mess. Required because the Activity.isDestroyed method exists
+         * just from API level 17.
+         */
+        private void onDestroy() {
+            this.mapActivity = null;
+        }
     }
 
     private class ButtonsUpdate {
@@ -513,6 +528,10 @@ public class MapActivity extends FragmentActivity implements
             }
         }
 
+        /**
+         * The Android rotate screen mess. Required because the Activity.isDestroyed method exists
+         * just from API level 17.
+         */
         private void onDestroy() {
             this.mapActivity = null;
         }
