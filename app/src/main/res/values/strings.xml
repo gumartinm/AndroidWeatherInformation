@@ -108,11 +108,8 @@
 
     <!-- API key Notice Dialog -->
     <string name="api_id_key_notice_title">OpenWeatherMap API Key</string>
-    <string name="api_id_key_notice_message">OpenWeatherMap works better with an application ID.\n\nThis key can be added in the preferences window.\n\nTo obtain an API Key for OpenWeatherMap register on the OpenWeatherMap website.\n\nPress OK button if you don\'t want to see this message again.</string>
+    <string name="api_id_key_notice_message">OpenWeatherMap requires an application ID.\n\nThis key can be added in the preferences window.\n\nTo obtain an API Key for OpenWeatherMap register on the OpenWeatherMap website.</string>
     <string name="api_id_key_notice_ok_button">OK</string>
-    <string name="api_id_key_notice_cancel_button">Cancel</string>
-    <!-- DO NOT TRANSLATE -->
-    <string name="api_id_key_notice_preference_key">api_key_notice_preference_key</string>
 
 
     <!-- Widget Preferences Activity -->

@@ -17,10 +17,7 @@ package name.gumartinm.weather.information.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 
 import name.gumartinm.weather.information.R;
@@ -45,18 +42,7 @@ public class APIKeyNoticeDialogFragment extends DialogFragment {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle(title)
                 .setMessage(this.getString(R.string.api_id_key_notice_message))
-                .setNegativeButton(this.getString(R.string.api_id_key_notice_cancel_button), null)
-                .setPositiveButton(this.getString(R.string.api_id_key_notice_ok_button),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(final DialogInterface dialog, final int whichButton) {
-                            // Save response to permanent storage
-                            final SharedPreferences.Editor prefs = PreferenceManager
-                                .getDefaultSharedPreferences(getActivity().getApplicationContext()).edit();
-                                prefs.putBoolean(getActivity().getString(R.string.api_id_key_notice_preference_key), false);
-                                prefs.commit();
-                        }
-                    })
+                .setPositiveButton(this.getString(R.string.api_id_key_notice_ok_button), null)
                 .create();
     }
     

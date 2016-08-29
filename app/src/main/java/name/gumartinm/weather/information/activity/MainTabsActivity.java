@@ -149,10 +149,7 @@ public class MainTabsActivity extends FragmentActivity {
 
         final String APPID = sharedPreferences.getString(this.getString(R.string.weather_preferences_app_id_key), "");
 
-        final String noticeKeyPreference = this.getString(R.string.api_id_key_notice_preference_key);
-        final boolean notice = sharedPreferences.getBoolean(noticeKeyPreference, true);
-
-        if (notice && APPID.isEmpty()) {
+        if (APPID.isEmpty()) {
             final FragmentManager fm = this.getSupportFragmentManager();
             final Fragment buttonsFragment = fm.findFragmentByTag("noticeDialog");
             if (buttonsFragment == null) {
