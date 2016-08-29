@@ -9,8 +9,8 @@ android {
             storePassword ''
         }
     }
-    compileSdkVersion 18
-    buildToolsVersion '21.1.1'
+    compileSdkVersion 24
+    buildToolsVersion '24.0.2'
     defaultConfig {
         applicationId "name.gumartinm.weather.information"
         minSdkVersion 11
