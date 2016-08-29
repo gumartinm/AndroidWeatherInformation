@@ -18,9 +18,13 @@ android {
 
         testApplicationId "name.gumartinm.weather.information.test"
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
+        // WARNING: Jack requires a lot of memory :(
         jackOptions {
             enabled true
         }
+        // Enabling multidex support. Since the last upgrade my application does not compile
+        // without multi dex :(
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -47,4 +51,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:+'
     compile 'com.fasterxml.jackson.core:jackson-core:2.3.3'
     compile 'com.jakewharton.timber:timber:2.5.0'
+    compile 'com.android.support:multidex:+'
 }

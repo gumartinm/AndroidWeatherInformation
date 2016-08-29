@@ -17,6 +17,7 @@ package name.gumartinm.weather.information.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
@@ -46,6 +47,12 @@ public class WeatherInformationApp extends Application {
 
             Timber.plant(new GoogleAnalyticsReportingTree(analyticsTrackers));
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     private static class GoogleAnalyticsTrackers {
