@@ -15,6 +15,23 @@
  */
 package name.gumartinm.weather.information.fragment.overview;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.ListFragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.view.View;
+import android.widget.ListView;
+
+import com.fasterxml.jackson.core.JsonParseException;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -28,25 +45,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.http.client.ClientProtocolException;
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.http.AndroidHttpClient;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.ListFragment;
-import android.support.v4.content.LocalBroadcastManager;
-import android.view.View;
-import android.widget.ListView;
-
-import com.fasterxml.jackson.core.JsonParseException;
 import name.gumartinm.weather.information.R;
 import name.gumartinm.weather.information.activity.SpecificActivity;
 import name.gumartinm.weather.information.fragment.specific.SpecificFragment;
@@ -163,7 +161,7 @@ public class OverviewFragment extends ListFragment {
             this.setListShownNoAnimation(false);
             final OverviewTask task = new OverviewTask(
             		this.getActivity().getApplicationContext(),
-                    new CustomHTTPClient(AndroidHttpClient.newInstance(this.getString(R.string.http_client_agent))),
+                    CustomHTTPClient.newInstance(this.getString(R.string.http_client_agent)),
                     new ServiceForecastParser(new JPOSForecastParser()));
 
             task.execute(weatherLocation.getLatitude(), weatherLocation.getLongitude());
@@ -329,8 +327,6 @@ public class OverviewFragment extends ListFragment {
                 forecast = this.doInBackgroundThrowable(latitude, longitude);
             } catch (final JsonParseException e) {
                 Timber.e(e, "OverviewTask doInBackground exception: ");
-            } catch (final ClientProtocolException e) {
-                Timber.e(e, "OverviewTask doInBackground exception: ");
             } catch (final MalformedURLException e) {
                 Timber.e(e, "OverviewTask doInBackground exception: ");
             } catch (final URISyntaxException e) {
@@ -342,15 +338,13 @@ public class OverviewFragment extends ListFragment {
                 // I loathe doing this but we must show some error to our dear user by means
                 // of returning Forecast null value.
                 Timber.e(e, "OverviewTask doInBackground exception: ");
-            } finally {
-            	HTTPClient.close();
             }
 
             return forecast;
         }
 
         private Forecast doInBackgroundThrowable(final double latitude, final double longitude)
-                        throws URISyntaxException, ClientProtocolException, JsonParseException, IOException {
+                        throws URISyntaxException, JsonParseException, IOException {
             final SharedPreferences sharedPreferences = PreferenceManager
                     .getDefaultSharedPreferences(localContext.getApplicationContext());
             final String APPID = sharedPreferences.getString(localContext.getString(R.string.weather_preferences_app_id_key), "");

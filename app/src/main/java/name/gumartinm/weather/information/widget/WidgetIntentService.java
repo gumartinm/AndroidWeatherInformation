@@ -24,13 +24,21 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.net.http.AndroidHttpClient;
 import android.preference.PreferenceManager;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.fasterxml.jackson.core.JsonParseException;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import name.gumartinm.weather.information.R;
 import name.gumartinm.weather.information.httpclient.CustomHTTPClient;
 import name.gumartinm.weather.information.model.DatabaseQueries;
@@ -41,16 +49,6 @@ import name.gumartinm.weather.information.service.IconsList;
 import name.gumartinm.weather.information.service.PermanentStorage;
 import name.gumartinm.weather.information.service.ServiceCurrentParser;
 import timber.log.Timber;
-
-import org.apache.http.client.ClientProtocolException;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
 
 public class WidgetIntentService extends IntentService {
     private static final String WIDGET_PREFERENCES_NAME = "WIDGET_PREFERENCES";
@@ -145,15 +143,12 @@ public class WidgetIntentService extends IntentService {
 	private Current getRemoteCurrent(final WeatherLocation weatherLocation) {
 
 		final ServiceCurrentParser weatherService = new ServiceCurrentParser(new JPOSCurrentParser());
-		final CustomHTTPClient HTTPClient = new CustomHTTPClient(
-				AndroidHttpClient.newInstance(this.getString(R.string.http_client_agent)));
+		final CustomHTTPClient HTTPClient = CustomHTTPClient.newInstance(this.getString(R.string.http_client_agent));
 
 		try {
 			return this.getRemoteCurrentThrowable(weatherLocation, HTTPClient, weatherService);
 
 		} catch (final JsonParseException e) {
-            Timber.e(e, "doInBackground exception: ");
-		} catch (final ClientProtocolException e) {
             Timber.e(e, "doInBackground exception: ");
 		} catch (final MalformedURLException e) {
             Timber.e(e, "doInBackground exception: ");
@@ -162,8 +157,6 @@ public class WidgetIntentService extends IntentService {
 		} catch (final IOException e) {
 			// logger infrastructure swallows UnknownHostException :/
             Timber.e(e, "doInBackground exception: " + e.getMessage());
-		} finally {
-			HTTPClient.close();
 		}
 
 		return null;
@@ -171,7 +164,7 @@ public class WidgetIntentService extends IntentService {
 
 	private Current getRemoteCurrentThrowable(final WeatherLocation weatherLocation,
 			final CustomHTTPClient HTTPClient, final ServiceCurrentParser weatherService)
-					throws ClientProtocolException, MalformedURLException, URISyntaxException,
+					throws MalformedURLException, URISyntaxException,
 					JsonParseException, IOException {
         final SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this.getApplicationContext());

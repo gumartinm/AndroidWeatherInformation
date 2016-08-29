@@ -15,6 +15,21 @@
  */
 package name.gumartinm.weather.information.notification;
 
+import android.app.IntentService;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.TaskStackBuilder;
+import android.widget.RemoteViews;
+
+import com.fasterxml.jackson.core.JsonParseException;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -23,23 +38,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import org.apache.http.client.ClientProtocolException;
-
-import android.app.IntentService;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.http.AndroidHttpClient;
-import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.app.TaskStackBuilder;
-import android.widget.RemoteViews;
-
-import com.fasterxml.jackson.core.JsonParseException;
 import name.gumartinm.weather.information.R;
 import name.gumartinm.weather.information.activity.MainTabsActivity;
 import name.gumartinm.weather.information.httpclient.CustomHTTPClient;
@@ -67,16 +65,13 @@ public class NotificationIntentService extends IntentService {
         
         if (weatherLocation != null) {
             final ServiceCurrentParser weatherService = new ServiceCurrentParser(new JPOSCurrentParser());
-            final CustomHTTPClient HTTPClient = new CustomHTTPClient(
-                    AndroidHttpClient.newInstance(this.getString(R.string.http_client_agent)));
+            final CustomHTTPClient HTTPClient = CustomHTTPClient.newInstance(this.getString(R.string.http_client_agent));
 
             Current current = null;
             try {
             	current = this.doInBackgroundThrowable(weatherLocation, HTTPClient, weatherService);
                 
             } catch (final JsonParseException e) {
-                Timber.e(e, "doInBackground exception: ");
-            } catch (final ClientProtocolException e) {
                 Timber.e(e, "doInBackground exception: ");
             } catch (final MalformedURLException e) {
                 Timber.e(e, "doInBackground exception: ");
@@ -85,8 +80,6 @@ public class NotificationIntentService extends IntentService {
             } catch (final IOException e) {
                 // logger infrastructure swallows UnknownHostException :/
                 Timber.e(e, "doInBackground exception: " + e.getMessage());
-            } finally {
-                HTTPClient.close();
             }
             
             if (current != null) {
@@ -97,7 +90,7 @@ public class NotificationIntentService extends IntentService {
 
     private Current doInBackgroundThrowable(final WeatherLocation weatherLocation,
             final CustomHTTPClient HTTPClient, final ServiceCurrentParser weatherService)
-                    throws ClientProtocolException, MalformedURLException, URISyntaxException,
+                    throws MalformedURLException, URISyntaxException,
                     JsonParseException, IOException {
         final SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this.getApplicationContext());

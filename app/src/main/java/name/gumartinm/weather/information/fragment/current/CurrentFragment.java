@@ -25,8 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import org.apache.http.client.ClientProtocolException;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -34,7 +32,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -186,7 +183,7 @@ public class CurrentFragment extends Fragment {
         	this.getActivity().findViewById(R.id.weather_current_error_message).setVisibility(View.GONE);
             final CurrentTask task = new CurrentTask(
             		this.getActivity().getApplicationContext(),
-                    new CustomHTTPClient(AndroidHttpClient.newInstance(this.getString(R.string.http_client_agent))),
+                    CustomHTTPClient.newInstance(this.getString(R.string.http_client_agent)),
                     new ServiceCurrentParser(new JPOSCurrentParser()));
 
             task.execute(weatherLocation.getLatitude(), weatherLocation.getLongitude());
@@ -402,8 +399,6 @@ public class CurrentFragment extends Fragment {
             	current = this.doInBackgroundThrowable(latitude, longitude);
             } catch (final JsonParseException e) {
                 Timber.e(e, "CurrentTask doInBackground exception: ");
-            } catch (final ClientProtocolException e) {
-                Timber.e(e, "CurrentTask doInBackground exception: ");
             } catch (final MalformedURLException e) {
                 Timber.e(e, "CurrentTask doInBackground exception: ");
             } catch (final URISyntaxException e) {
@@ -415,15 +410,13 @@ public class CurrentFragment extends Fragment {
                 // I loathe doing this but we must show some error to our dear user by means
                 // of returning Forecast null value.
                 Timber.e(e, "CurrentTask doInBackground exception: ");
-            } finally {
-            	HTTPClient.close();
             }
 
             return current;
         }
 
         private Current doInBackgroundThrowable(final double latitude, final double longitude)
-                        throws URISyntaxException, ClientProtocolException, JsonParseException, IOException {
+                        throws URISyntaxException, JsonParseException, IOException {
             final SharedPreferences sharedPreferences = PreferenceManager
                     .getDefaultSharedPreferences(localContext.getApplicationContext());
             final String APPID = sharedPreferences.getString(localContext.getString(R.string.weather_preferences_app_id_key), "");
