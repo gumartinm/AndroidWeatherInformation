@@ -18,6 +18,9 @@ android {
 
         testApplicationId "name.gumartinm.weather.information.test"
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
+        jackOptions {
+            enabled true
+        }
     }
     buildTypes {
         release {
@@ -32,6 +35,10 @@ android {
             buildConfigField "boolean", "DEBUG_MODE", "true"
             debuggable true
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
