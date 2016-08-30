@@ -32,8 +32,8 @@ public class CustomHTTPClient {
 
     public String retrieveDataAsString(final URL url) throws IOException {
         final HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        urlConnection.setRequestProperty("User-Agent", userAgent);
         try {
+            urlConnection.setRequestProperty("User-Agent", userAgent);
             final InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             final ByteArrayOutputStream buffer = readInputStream(in);
             // No easy way of retrieving the charset from urlConnection.getContentType()
@@ -58,7 +58,7 @@ public class CustomHTTPClient {
         return byteBuffer;
     }
 
-    public static final CustomHTTPClient newInstance(String userAgent) {
+    public static final CustomHTTPClient newInstance(final String userAgent) {
         return new CustomHTTPClient(userAgent);
     }
 }
