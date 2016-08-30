@@ -31,17 +31,18 @@ public class CustomHTTPClient {
     }
 
     public String retrieveDataAsString(final URL url) throws IOException {
-        final HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        urlConnection.setRequestProperty("User-Agent", userAgent);
+        final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         try {
-            final InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            connection.setRequestProperty("User-Agent", userAgent);
+            connection.setRequestProperty("Cache-Control", "no-cache");
+            final InputStream in = new BufferedInputStream(connection.getInputStream());
             final ByteArrayOutputStream buffer = readInputStream(in);
             // No easy way of retrieving the charset from urlConnection.getContentType()
             // Currently OpenWeatherMap returns: application/json; charset=utf-8
             // Let's hope they will not change the content-type :/
             return new String(buffer.toByteArray(), Charset.forName("UTF-8"));
         } finally {
-            urlConnection.disconnect();
+            connection.disconnect();
         }
     }
 
@@ -58,7 +59,7 @@ public class CustomHTTPClient {
         return byteBuffer;
     }
 
-    public static final CustomHTTPClient newInstance(String userAgent) {
+    public static final CustomHTTPClient newInstance(final String userAgent) {
         return new CustomHTTPClient(userAgent);
     }
 }
