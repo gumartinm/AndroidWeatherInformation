@@ -86,7 +86,7 @@ From the settings window you can enable or disable notifications. When notificat
 
 ## Notice about missing OpenWeatherMap application ID
 
-Even if OpenWeatherMap can work without it, the OpenWeatherMap maintainers recommend to use an [API key](http://openweathermap.org/appid). Weather Information will show you a warning message when you do not have an API key. If you do not want to be bothered again with this message, just press the *OK* button and the warning popup will be dismissed forever.
+OpenWeatherMap requires an [API key](http://openweathermap.org/appid). Weather Information will show you a warning message when you do not have one.
 
 ![missing_app_key](screenshots/missing_app_key.png)
 
