@@ -15,6 +15,7 @@
     limitations under the License.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
@@ -59,6 +60,7 @@
                 android:orientation="horizontal"
                 android:padding="30dp">
 
+                <!-- TODO: We must use CheckBox for API 11 -->
                 <Switch android:id="@+id/weather_appwidget_configure_country"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -98,10 +100,10 @@
 
             <View style="@style/Divider"/>
 
-            <GridLayout
+            <android.support.v7.widget.GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
+                app:orientation="horizontal"
                 android:padding="30dp">
 
                 <TextView
@@ -110,17 +112,17 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/widget_configure_button_refresh_summary"
                     android:padding="5dp"
-                    android:layout_gravity="start" />
+                    app:layout_gravity="start" />
 
                 <Button android:id="@+id/weather_appwidget_configure_refresh_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
+                    app:layout_gravity="end"
                     android:textAlignment="center"
                     android:onClick="onClickRefresh"
                     android:text="@string/widget_preferences_button_refresh"/>
 
-            </GridLayout>
+            </android.support.v7.widget.GridLayout>
 
         </LinearLayout>
     </ScrollView>
