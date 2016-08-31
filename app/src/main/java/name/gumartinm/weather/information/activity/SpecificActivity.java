@@ -15,27 +15,26 @@
  */
 package name.gumartinm.weather.information.activity;
 
-import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+
+import java.text.MessageFormat;
+import java.util.Locale;
 
 import name.gumartinm.weather.information.R;
 import name.gumartinm.weather.information.model.DatabaseQueries;
 import name.gumartinm.weather.information.model.WeatherLocation;
 
-import java.text.MessageFormat;
-import java.util.Locale;
-
-public class SpecificActivity extends FragmentActivity {
+public class SpecificActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.weather_specific);
 
-        final ActionBar actionBar = this.getActionBar();
+        final ActionBar actionBar = this.getSupportActionBar();
 
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -49,7 +48,7 @@ public class SpecificActivity extends FragmentActivity {
         final DatabaseQueries query = new DatabaseQueries(this);
         final WeatherLocation weatherLocation = query.queryDataBase();
         if (weatherLocation != null) {
-        	final ActionBar actionBar = this.getActionBar();
+        	final ActionBar actionBar = this.getSupportActionBar();
             final String[] array = new String[2];
             array[0] = weatherLocation.getCity();
             array[1] = weatherLocation.getCountry();

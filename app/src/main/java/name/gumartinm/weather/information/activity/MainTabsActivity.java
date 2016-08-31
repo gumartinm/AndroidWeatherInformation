@@ -15,21 +15,24 @@
  */
 package name.gumartinm.weather.information.activity;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.text.MessageFormat;
+import java.util.Locale;
 
 import name.gumartinm.weather.information.R;
 import name.gumartinm.weather.information.fragment.APIKeyNoticeDialogFragment;
@@ -38,11 +41,8 @@ import name.gumartinm.weather.information.fragment.overview.OverviewFragment;
 import name.gumartinm.weather.information.model.DatabaseQueries;
 import name.gumartinm.weather.information.model.WeatherLocation;
 
-import java.text.MessageFormat;
-import java.util.Locale;
 
-
-public class MainTabsActivity extends FragmentActivity {
+public class MainTabsActivity extends AppCompatActivity {
     private static final int NUM_ITEMS = 2;
     private ViewPager mPager;
     
@@ -52,50 +52,19 @@ public class MainTabsActivity extends FragmentActivity {
         this.setContentView(R.layout.weather_main_tabs);
 
         this.mPager = (ViewPager)this.findViewById(R.id.pager);
-        this.mPager.setAdapter(new TabsAdapter(this.getSupportFragmentManager()));
+        this.mPager.setAdapter(new TabsAdapter(this.getSupportFragmentManager(), this.getApplicationContext()));
 
+        // Give the TabLayout the ViewPager
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(mPager);
 
-        this.mPager.setOnPageChangeListener(
-                new ViewPager.SimpleOnPageChangeListener() {
-                    @Override
-                    public void onPageSelected(final int position) {
-                        MainTabsActivity.this.getActionBar().setSelectedNavigationItem(position);
-                    }
-                });
-
-
-        final ActionBar actionBar = this.getActionBar();
+        final ActionBar actionBar = this.getSupportActionBar();
 
         PreferenceManager.setDefaultValues(this, R.xml.weather_preferences, false);
 
         // Specify that tabs should be displayed in the action bar.
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        // Create a tab listener that is called when the user changes tabs.
-        final ActionBar.TabListener tabListener = new ActionBar.TabListener() {
-
-            @Override
-            public void onTabSelected(final Tab tab, final FragmentTransaction ft) {
-                MainTabsActivity.this.mPager.setCurrentItem(tab.getPosition());
-
-            }
-
-            @Override
-            public void onTabUnselected(final Tab tab, final FragmentTransaction ft) {
-
-            }
-
-            @Override
-            public void onTabReselected(final Tab tab, final FragmentTransaction ft) {
-
-            }
-
-        };
-
-        actionBar.addTab(actionBar.newTab().setText(this.getString(R.string.text_tab_currently)).setTabListener(tabListener));
-        actionBar.addTab(actionBar.newTab().setText(this.getString(R.string.text_tab_five_days_forecast)).setTabListener(tabListener));
     }
 
     @Override
@@ -160,7 +129,7 @@ public class MainTabsActivity extends FragmentActivity {
             }
         }
 
-        final ActionBar actionBar = this.getActionBar();
+        final ActionBar actionBar = this.getSupportActionBar();
         
         // 1. Update title.
         final DatabaseQueries query = new DatabaseQueries(this.getApplicationContext());
@@ -176,18 +145,7 @@ public class MainTabsActivity extends FragmentActivity {
         	actionBar.setTitle(this.getString(R.string.text_field_no_chosen_location));
         }
 
-        // 2. Update forecast tab text.
-        final String keyPreference = this.getString(R.string.weather_preferences_day_forecast_key);
-        final String value = sharedPreferences.getString(keyPreference, "");
-        String humanValue = "";
-        if (value.equals(this.getString(R.string.weather_preferences_day_forecast_five_day))) {
-            humanValue = this.getString(R.string.text_tab_five_days_forecast);
-        } else if (value.equals(this.getString(R.string.weather_preferences_day_forecast_ten_day))) {
-            humanValue = this.getString(R.string.text_tab_ten_days_forecast);
-        } else if (value.equals(this.getString(R.string.weather_preferences_day_forecast_fourteen_day))) {
-            humanValue = this.getString(R.string.text_tab_fourteen_days_forecast);
-        }
-        actionBar.getTabAt(1).setText(humanValue);
+
     }
 
     @Override
@@ -196,8 +154,12 @@ public class MainTabsActivity extends FragmentActivity {
     }
 
     private class TabsAdapter extends FragmentPagerAdapter {
-        public TabsAdapter(final FragmentManager fm) {
+        private final String tabTitles[] = new String[NUM_ITEMS];
+        private final Context context;
+
+        public TabsAdapter(final FragmentManager fm, Context context) {
             super(fm);
+            this.context = context;
         }
 
         @Override
@@ -213,6 +175,31 @@ public class MainTabsActivity extends FragmentActivity {
                 return new OverviewFragment();
             }
 
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            final SharedPreferences sharedPreferences = PreferenceManager
+                    .getDefaultSharedPreferences(context);
+
+            // 1. Set currently tab text.
+            final String currently = context.getString(R.string.text_tab_currently);
+            tabTitles[0] = currently;
+
+            // 2. Update forecast tab text.
+            final String keyPreference = context.getString(R.string.weather_preferences_day_forecast_key);
+            final String value = sharedPreferences.getString(keyPreference, "");
+            String forecast = "";
+            if (value.equals(context.getString(R.string.weather_preferences_day_forecast_five_day))) {
+                forecast = context.getString(R.string.text_tab_five_days_forecast);
+            } else if (value.equals(context.getString(R.string.weather_preferences_day_forecast_ten_day))) {
+                forecast = context.getString(R.string.text_tab_ten_days_forecast);
+            } else if (value.equals(context.getString(R.string.weather_preferences_day_forecast_fourteen_day))) {
+                forecast = context.getString(R.string.text_tab_fourteen_days_forecast);
+            }
+            tabTitles[1] = forecast;
+
+            return tabTitles[position];
         }
     }
 }

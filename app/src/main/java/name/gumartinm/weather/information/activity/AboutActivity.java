@@ -15,16 +15,16 @@
  */
 package name.gumartinm.weather.information.activity;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import name.gumartinm.weather.information.R;
 
-public class AboutActivity extends Activity {
+public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class AboutActivity extends Activity {
     public void onResume() {
         super.onResume();
 
-        final ActionBar actionBar = this.getActionBar();
+        final ActionBar actionBar = this.getSupportActionBar();
         actionBar.setTitle(this.getString(R.string.weather_about_action));
     }
 

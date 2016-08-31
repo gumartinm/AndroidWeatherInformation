@@ -54,6 +54,7 @@ dependencies {
     compile 'com.android.support:support-v4:+'
     compile 'com.google.android.gms:play-services-maps:+'
     compile 'com.google.android.gms:play-services-analytics:+'
+    compile 'com.android.support:design:+'
     compile 'com.fasterxml.jackson.core:jackson-core:2.3.3'
     compile 'com.jakewharton.timber:timber:2.5.0'
 }

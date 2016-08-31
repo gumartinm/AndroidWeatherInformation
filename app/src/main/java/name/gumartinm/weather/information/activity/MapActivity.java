@@ -15,7 +15,6 @@
  */
 package name.gumartinm.weather.information.activity;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -25,9 +24,10 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -48,7 +48,7 @@ import name.gumartinm.weather.information.model.DatabaseQueries;
 import name.gumartinm.weather.information.model.WeatherLocation;
 
 
-public class MapActivity extends FragmentActivity implements
+public class MapActivity extends AppCompatActivity implements
 									LocationListener,
 									MapProgressFragment.TaskCallbacks {
     private static final String PROGRESS_FRAGMENT_TAG = "PROGRESS_FRAGMENT";
@@ -100,7 +100,7 @@ public class MapActivity extends FragmentActivity implements
     public void onResume() {
         super.onResume();
 
-        final ActionBar actionBar = this.getActionBar();
+        final ActionBar actionBar = this.getSupportActionBar();
         actionBar.setTitle(this.getString(R.string.weather_map_mark_location));
         
         WeatherLocation weatherLocation;

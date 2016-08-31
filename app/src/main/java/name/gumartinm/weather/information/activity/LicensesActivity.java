@@ -15,9 +15,9 @@
  */
 package name.gumartinm.weather.information.activity;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -31,7 +31,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
-public class LicensesActivity extends Activity {
+public class LicensesActivity extends AppCompatActivity {
     private WebView mWebView;
 
 
@@ -47,7 +47,7 @@ public class LicensesActivity extends Activity {
     public void onResume() {
         super.onResume();
 
-        final ActionBar actionBar = this.getActionBar();
+        final ActionBar actionBar = this.getSupportActionBar();
         actionBar.setTitle(this.getString(R.string.weather_licenses_title));
 
         final String googlePlayServices = GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(this.getApplicationContext());
