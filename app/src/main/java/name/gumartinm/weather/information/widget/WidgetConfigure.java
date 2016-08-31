@@ -15,13 +15,13 @@
  */
 package name.gumartinm.weather.information.widget;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
@@ -29,7 +29,7 @@ import android.widget.Switch;
 
 import name.gumartinm.weather.information.R;
 
-public class WidgetConfigure extends Activity {
+public class WidgetConfigure extends AppCompatActivity {
     private static final String WIDGET_PREFERENCES_NAME = "WIDGET_PREFERENCES";
 	private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
@@ -85,9 +85,11 @@ public class WidgetConfigure extends Activity {
             }
         });
         if (isShowCountry) {
+            // TODO: We must use CheckBox for API 11 -->
             countrySwitch.setChecked(true);
             countrySwitch.setText(this.getString(R.string.widget_preferences_country_switch_on_summary));
         } else {
+            // TODO: We must use CheckBox for API 11 -->
             countrySwitch.setChecked(false);
             countrySwitch.setText(this.getString(R.string.widget_preferences_country_switch_off_summary));
         }
@@ -121,7 +123,7 @@ public class WidgetConfigure extends Activity {
     public void onResume() {
         super.onResume();
 
-        final ActionBar actionBar = this.getActionBar();
+        final ActionBar actionBar = this.getSupportActionBar();
         actionBar.setTitle(this.getString(R.string.widget_preferences_action_settings));
     }
 

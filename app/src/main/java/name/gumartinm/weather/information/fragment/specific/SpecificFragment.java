@@ -26,6 +26,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -225,7 +226,8 @@ public class SpecificFragment extends Fragment {
 
 
         // 4. Update UI.
-        this.getActivity().getActionBar().setSubtitle(dayFormatter.format(date).toUpperCase());
+        final AppCompatActivity appCompatActivity = (AppCompatActivity)this.getActivity();
+        appCompatActivity.getSupportActionBar().setSubtitle(dayFormatter.format(date).toUpperCase());
         
         final TextView tempMaxView = (TextView) getActivity().findViewById(R.id.weather_specific_temp_max);
         tempMaxView.setText(tempMax);
