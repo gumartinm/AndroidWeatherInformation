@@ -29,6 +29,13 @@ public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.ic_launcher);
+
         setContentView(R.layout.weather_about);
     }
 

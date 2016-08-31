@@ -37,6 +37,12 @@ public class WidgetConfigure extends AppCompatActivity {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        final ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.ic_launcher);
+
         // Find the widget id from the intent. 
         final Intent intent = getIntent();
         final Bundle extras = intent.getExtras();

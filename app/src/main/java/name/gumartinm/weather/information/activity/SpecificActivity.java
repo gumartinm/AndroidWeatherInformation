@@ -34,9 +34,10 @@ public class SpecificActivity extends AppCompatActivity {
         this.setContentView(R.layout.weather_specific);
 
         final ActionBar actionBar = this.getSupportActionBar();
-
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.ic_launcher);
 
     }
 

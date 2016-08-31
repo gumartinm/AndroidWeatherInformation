@@ -59,12 +59,12 @@ public class MainTabsActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mPager);
 
         final ActionBar actionBar = this.getSupportActionBar();
-
-        PreferenceManager.setDefaultValues(this, R.xml.weather_preferences, false);
-
-        // Specify that tabs should be displayed in the action bar.
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.ic_launcher);
+
+        PreferenceManager.setDefaultValues(this, R.xml.weather_preferences, false);
     }
 
     @Override

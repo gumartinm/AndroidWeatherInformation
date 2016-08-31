@@ -26,6 +26,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,13 @@ public class SpecificFragment extends Fragment {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final AppCompatActivity appCompatActivity = (AppCompatActivity)this.getActivity();
+        final ActionBar actionBar = appCompatActivity.getSupportActionBar();
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.ic_launcher);
         
         final Bundle extras = this.getActivity().getIntent().getExtras();
 

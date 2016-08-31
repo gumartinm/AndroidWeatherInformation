@@ -38,6 +38,13 @@ public class LicensesActivity extends AppCompatActivity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.ic_launcher);
+
         setContentView(R.layout.weather_licenses);
 
         mWebView = (WebView) this.findViewById(R.id.weather_licenses);

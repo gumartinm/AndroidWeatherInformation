@@ -28,6 +28,12 @@ public class PreferencesActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        final ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.ic_launcher);
+
         this.getFragmentManager()
         .beginTransaction()
         .replace(android.R.id.content,
