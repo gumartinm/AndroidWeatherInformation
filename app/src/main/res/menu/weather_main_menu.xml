@@ -14,7 +14,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
     
     
     <item android:id="@+id/weather_menu_settings"
@@ -26,11 +27,11 @@
         android:checkable="false"
         android:enabled="true"
         android:icon="@drawable/ic_action_settings"
-        android:showAsAction="ifRoom">
+        app:showAsAction="ifRoom">
     </item>
     <item android:id="@+id/weather_menu_map"
         android:icon="@drawable/ic_action_map"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:visible="true"
         android:checkable="false"
         android:enabled="true"
@@ -39,7 +40,7 @@
         android:titleCondensed="@string/weather_map_action_map">
     </item>
     <item android:id="@+id/weather_menu_about"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:visible="true"
         android:checkable="false"
         android:enabled="true"

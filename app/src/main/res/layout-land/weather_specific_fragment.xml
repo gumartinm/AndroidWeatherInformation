@@ -62,9 +62,12 @@
         		    android:layout_width="wrap_content"
         		    android:layout_height="wrap_content"
         		    android:paddingEnd="10dp"
+					android:paddingRight="10dp"
         		    android:paddingStart="20dp"
+					android:paddingLeft="20dp"
         		    android:singleLine="true"
         		    android:text="55ºC"
+					android:layout_gravity="start"
         		    android:textAlignment="textStart"
         		    android:textAppearance="?android:attr/textAppearanceLarge"
         		    android:textStyle="bold" />
@@ -73,9 +76,12 @@
             		android:id="@+id/weather_specific_temp_min"
             		android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
+					android:layout_gravity="start"
             		android:textAlignment="textStart"
-            		android:paddingEnd="10dp"
-            		android:paddingStart="20dp"
+					android:paddingEnd="10dp"
+					android:paddingRight="10dp"
+					android:paddingStart="20dp"
+					android:paddingLeft="20dp"
             		android:singleLine="true"
             		android:text="25ºC"
             		android:textAppearance="?android:attr/textAppearanceMedium"
@@ -156,6 +162,7 @@
             		android:layout_marginTop="5dp"
             		android:layout_marginBottom="5dp"
             		android:layout_marginEnd="5dp"
+					android:layout_marginRight="5dp"
             		android:textAppearance="?android:attr/textAppearanceSmall"
             		android:textStyle="bold" />
 			</LinearLayout>
@@ -207,6 +214,7 @@
             		android:layout_marginTop="5dp"
             		android:layout_marginBottom="5dp"
            	 		android:layout_marginEnd="5dp"
+					android:layout_marginRight="5dp"
             		android:textAppearance="?android:attr/textAppearanceSmall"
             		android:textStyle="bold" />
         	</LinearLayout>
@@ -268,6 +276,7 @@
             		android:layout_marginTop="5dp"
             		android:layout_marginBottom="5dp"
             		android:layout_marginEnd="5dp"
+					android:layout_marginRight="5dp"
             		android:textAppearance="?android:attr/textAppearanceSmall"
             		android:textStyle="bold" />
 			</LinearLayout>
@@ -319,6 +328,7 @@
             		android:layout_marginTop="5dp"
             		android:layout_marginBottom="5dp"
             		android:layout_marginEnd="5dp"
+					android:layout_marginRight="5dp"
             		android:textAppearance="?android:attr/textAppearanceSmall"
             		android:textStyle="bold" />
         		</LinearLayout>
@@ -369,6 +379,7 @@
             		android:layout_marginTop="5dp"
             		android:layout_marginBottom="5dp"
             		android:layout_marginEnd="5dp"
+					android:layout_marginRight="5dp"
             		android:textAppearance="?android:attr/textAppearanceSmall"
             		android:textStyle="bold" />
         </LinearLayout>
@@ -389,6 +400,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="30dp"
+				android:paddingRight="30dp"
                 android:orientation="vertical" >
 
                 <!-- Time of day -->
@@ -473,6 +485,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="30dp"
+				android:paddingRight="30dp"
                 android:orientation="vertical" >
 
                 <!-- Time of day -->
