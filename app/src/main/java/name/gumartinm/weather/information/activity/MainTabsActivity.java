@@ -45,6 +45,7 @@ import name.gumartinm.weather.information.model.WeatherLocation;
 public class MainTabsActivity extends AppCompatActivity {
     private static final int NUM_ITEMS = 2;
     private ViewPager mPager;
+    private TabLayout tabLayout;
     
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -52,10 +53,10 @@ public class MainTabsActivity extends AppCompatActivity {
         this.setContentView(R.layout.weather_main_tabs);
 
         this.mPager = (ViewPager)this.findViewById(R.id.pager);
-        this.mPager.setAdapter(new TabsAdapter(this.getSupportFragmentManager(), this.getApplicationContext()));
+        this.mPager.setAdapter(new TabsAdapter(this.getSupportFragmentManager()));
 
         // Give the TabLayout the ViewPager
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(mPager);
 
         final ActionBar actionBar = this.getSupportActionBar();
@@ -131,9 +132,9 @@ public class MainTabsActivity extends AppCompatActivity {
             }
         }
 
-        final ActionBar actionBar = this.getSupportActionBar();
-        
+
         // 1. Update title.
+        final ActionBar actionBar = this.getSupportActionBar();
         final DatabaseQueries query = new DatabaseQueries(this.getApplicationContext());
         final WeatherLocation weatherLocation = query.queryDataBase();
         if (weatherLocation != null) {
@@ -147,7 +148,22 @@ public class MainTabsActivity extends AppCompatActivity {
         	actionBar.setTitle(this.getString(R.string.text_field_no_chosen_location));
         }
 
+        // 2. Set currently tab text.
+        final String currently = this.getString(R.string.text_tab_currently);
+        tabLayout.getTabAt(0).setText(currently);
 
+        // 3. Update forecast tab text.
+        final String keyPreference = this.getString(R.string.weather_preferences_day_forecast_key);
+        final String value = sharedPreferences.getString(keyPreference, "");
+        String forecast = "";
+        if (value.equals(this.getString(R.string.weather_preferences_day_forecast_five_day))) {
+            forecast = this.getString(R.string.text_tab_five_days_forecast);
+        } else if (value.equals(this.getString(R.string.weather_preferences_day_forecast_ten_day))) {
+            forecast = this.getString(R.string.text_tab_ten_days_forecast);
+        } else if (value.equals(this.getString(R.string.weather_preferences_day_forecast_fourteen_day))) {
+            forecast = this.getString(R.string.text_tab_fourteen_days_forecast);
+        }
+        tabLayout.getTabAt(1).setText(forecast);
     }
 
     @Override
@@ -156,12 +172,9 @@ public class MainTabsActivity extends AppCompatActivity {
     }
 
     private class TabsAdapter extends FragmentPagerAdapter {
-        private final String tabTitles[] = new String[NUM_ITEMS];
-        private final Context context;
 
-        public TabsAdapter(final FragmentManager fm, Context context) {
+        public TabsAdapter(final FragmentManager fm) {
             super(fm);
-            this.context = context;
         }
 
         @Override
@@ -177,31 +190,6 @@ public class MainTabsActivity extends AppCompatActivity {
                 return new OverviewFragment();
             }
 
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            final SharedPreferences sharedPreferences = PreferenceManager
-                    .getDefaultSharedPreferences(context);
-
-            // 1. Set currently tab text.
-            final String currently = context.getString(R.string.text_tab_currently);
-            tabTitles[0] = currently;
-
-            // 2. Update forecast tab text.
-            final String keyPreference = context.getString(R.string.weather_preferences_day_forecast_key);
-            final String value = sharedPreferences.getString(keyPreference, "");
-            String forecast = "";
-            if (value.equals(context.getString(R.string.weather_preferences_day_forecast_five_day))) {
-                forecast = context.getString(R.string.text_tab_five_days_forecast);
-            } else if (value.equals(context.getString(R.string.weather_preferences_day_forecast_ten_day))) {
-                forecast = context.getString(R.string.text_tab_ten_days_forecast);
-            } else if (value.equals(context.getString(R.string.weather_preferences_day_forecast_fourteen_day))) {
-                forecast = context.getString(R.string.text_tab_fourteen_days_forecast);
-            }
-            tabTitles[1] = forecast;
-
-            return tabTitles[position];
         }
     }
 }
