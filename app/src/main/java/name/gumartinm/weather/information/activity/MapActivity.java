@@ -71,14 +71,13 @@ public class MapActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.weather_map);
 
         final ActionBar actionBar = this.getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.drawable.ic_launcher);
-
-        this.setContentView(R.layout.weather_map);
         
         // Acquire a reference to the system Location Manager
         this.mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
