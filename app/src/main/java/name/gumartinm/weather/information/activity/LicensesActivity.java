@@ -20,6 +20,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import name.gumartinm.weather.information.R;
 import timber.log.Timber;
@@ -57,7 +58,8 @@ public class LicensesActivity extends AppCompatActivity {
         final ActionBar actionBar = this.getSupportActionBar();
         actionBar.setTitle(this.getString(R.string.weather_licenses_title));
 
-        final String googlePlayServices = GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(this.getApplicationContext());
+        final GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        final String googlePlayServices = googleAPI.getOpenSourceSoftwareLicenseInfo(this.getApplicationContext());
         try {
             final StringBuilder stringBuilder = this.loadData();
             stringBuilder.append(googlePlayServices).append("</pre>").append("</body>").append("</html>");
