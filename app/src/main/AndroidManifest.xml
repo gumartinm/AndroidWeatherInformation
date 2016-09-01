@@ -66,8 +66,14 @@
         <activity
             android:name=".activity.MainTabsActivity"
             android:hardwareAccelerated="false"
-            android:launchMode="singleTop"
+            android:launchMode="singleTop" >
+            <!--
             android:uiOptions="splitActionBarWhenNarrow" >
+                WARNING: Split ActionBar does not work with Theme.AppCompat
+                See: https://commonsware.com/blog/2014/11/18/android-5p0-deprecation-splitactionbarwhennarrow.html
+                     http://stackoverflow.com/a/27047159
+                Android often sucks :(
+            -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
