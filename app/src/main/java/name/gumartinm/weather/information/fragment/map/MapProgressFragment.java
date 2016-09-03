@@ -15,11 +15,6 @@
  */
 package name.gumartinm.weather.information.fragment.map;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-
-import android.app.Activity;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
@@ -29,6 +24,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import name.gumartinm.weather.information.R;
 import name.gumartinm.weather.information.model.WeatherLocation;
@@ -45,7 +44,7 @@ public class MapProgressFragment extends Fragment {
 	 * Callback interface through which the fragment will report the
 	 * task's progress and results back to the Activity.
 	 */
-	public static interface TaskCallbacks {
+	public interface TaskCallbacks {
 		void onPostExecute(final WeatherLocation weatherLocation);
 	}
 	
@@ -85,9 +84,9 @@ public class MapProgressFragment extends Fragment {
 	 * each configuration change.
 	 */
 	@Override
-	public void onAttach(final Activity activity) {
-		super.onAttach(activity);
-		mCallbacks = (TaskCallbacks) activity;
+	public void onAttach(final Context context) {
+		super.onAttach(context);
+		mCallbacks = (TaskCallbacks) context;
 	}
 	
 	/**
