@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
@@ -36,12 +37,6 @@ public class WidgetConfigure extends AppCompatActivity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        final ActionBar actionBar = this.getSupportActionBar();
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.drawable.ic_launcher);
 
         // Find the widget id from the intent. 
         final Intent intent = getIntent();
@@ -68,6 +63,9 @@ public class WidgetConfigure extends AppCompatActivity {
         
         // Set the view layout resource to use.
         this.setContentView(R.layout.appwidget_configure);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.weather_main_toolbar);
+        this.setSupportActionBar(toolbar);
 
         /******************* Show/hide country field *******************/
         String keyPreference = this.getApplicationContext().getString(

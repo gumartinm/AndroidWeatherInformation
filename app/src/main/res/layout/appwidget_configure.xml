@@ -19,6 +19,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
+    <include layout="@layout/weather_general_toolbar"/>
+
     <LinearLayout android:id="@+id/weather_appwidget_configure_button_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -38,7 +40,8 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@id/weather_appwidget_configure_button_layout">
+        android:layout_above="@id/weather_appwidget_configure_button_layout"
+        android:layout_below="@+id/weather_main_toolbar">
 
         <LinearLayout
             android:layout_width="fill_parent"
