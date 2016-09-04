@@ -40,12 +40,12 @@
     <string name="text_field_description_when_error">no description available</string>
     <string name="text_field_no_chosen_location">no chosen location</string>
     <!-- DO NOT TRANSLATE -->
-    <string name="refresh_interval_900000">900000</string>
-    <string name="refresh_interval_1800000">1800000</string>
-    <string name="refresh_interval_3600000">3600000</string>
-    <string name="refresh_interval_7200000">7200000</string>
-    <string name="refresh_interval_43200000">43200000</string>
-    <string name="refresh_interval_86400000">86400000</string>
+    <string name="refresh_interval_900000" translatable="false">900000</string>
+    <string name="refresh_interval_1800000" translatable="false">1800000</string>
+    <string name="refresh_interval_3600000" translatable="false">3600000</string>
+    <string name="refresh_interval_7200000" translatable="false">7200000</string>
+    <string name="refresh_interval_43200000" translatable="false">43200000</string>
+    <string name="refresh_interval_86400000" translatable="false">86400000</string>
 
 
     <!-- Preferences Acitivity -->
@@ -96,14 +96,14 @@
     <string name="weather_preferences_app_id_text">OpenWeatherMap API Key</string>
     <string name="weather_preferences_app_id_text_empty_key">value not found</string>
     <!-- DO NOT TRANSLATE -->
-    <string name="weather_preferences_app_id_key">weather_preferences_app_id_key</string>
-    <string name="weather_preferences_pressure_key">weather_preferences_pressure</string>
-    <string name="weather_preferences_wind_key">weather_preferences_wind</string>
-    <string name="weather_preferences_refresh_interval_key">weather_preferences_refresh_interval</string>
-    <string name="weather_preferences_day_forecast_key">weather_preferences_day_forecast</string>
-    <string name="weather_preferences_notifications_temperature_key">weather_preferences_notifications_temperature</string>
-    <string name="weather_preferences_update_time_rate_key">weather_preferences_update_time_rate</string>
-    <string name="weather_preferences_temperature_key">weather_preferences_temperature</string>
+    <string name="weather_preferences_app_id_key" translatable="false">weather_preferences_app_id_key</string>
+    <string name="weather_preferences_pressure_key" translatable="false">weather_preferences_pressure</string>
+    <string name="weather_preferences_wind_key" translatable="false">weather_preferences_wind</string>
+    <string name="weather_preferences_refresh_interval_key" translatable="false">weather_preferences_refresh_interval</string>
+    <string name="weather_preferences_day_forecast_key" translatable="false">weather_preferences_day_forecast</string>
+    <string name="weather_preferences_notifications_temperature_key" translatable="false">weather_preferences_notifications_temperature</string>
+    <string name="weather_preferences_update_time_rate_key" translatable="false">weather_preferences_update_time_rate</string>
+    <string name="weather_preferences_temperature_key" translatable="false">weather_preferences_temperature</string>
 
 
     <!-- API key Notice Dialog -->
@@ -123,8 +123,8 @@
     <string name="widget_preferences_country_switch_off">OFF</string>
     <string name="widget_preferences_country_switch_on">ON</string>
     <!-- DO NOT TRANSLATE -->
-    <string name="widget_preferences_temperature_units_key">widget_preferences_temperature</string>
-    <string name="widget_preferences_country_switch_key">widget_preferences_country_switch</string>
+    <string name="widget_preferences_temperature_units_key" translatable="false">widget_preferences_temperature</string>
+    <string name="widget_preferences_country_switch_key" translatable="false">widget_preferences_country_switch</string>
 
 
     <!-- Map Activity -->
@@ -166,19 +166,19 @@
 
     <!-- BootReceiver -->
     <!-- DO NOT TRANSLATE -->
-    <string name="update_time_rate_900">900</string>
-    <string name="update_time_rate_1800">1800</string>
-    <string name="update_time_rate_3600">3600</string>
-    <string name="update_time_rate_43200">43200</string>
-    <string name="update_time_rate_86400">86400</string>
+    <string name="update_time_rate_900" translatable="false">900</string>
+    <string name="update_time_rate_1800" translatable="false">1800</string>
+    <string name="update_time_rate_3600" translatable="false">3600</string>
+    <string name="update_time_rate_43200" translatable="false">43200</string>
+    <string name="update_time_rate_86400" translatable="false">86400</string>
 
 
     <!-- DO NOT TRANSLATE -->
-    <string name="uri_api_weather_today">http://api.openweathermap.org/data/{0}/weather?lat={1}&amp;lon={2}&amp;cnt=1</string>
-    <string name="uri_api_weather_forecast">http://api.openweathermap.org/data/{0}/forecast/daily?lat={1}&amp;lon={2}&amp;cnt={3}&amp;mode=json</string>
-    <string name="api_version">2.5</string>
-    <string name="application_source_code_url">https://github.com/gumartinm/AndroidWeatherInformation</string>
-    <string name="my_url">http://gumartinm.name</string>
-    <string name="openweathermap_url">http://openweathermap.org/</string>
-    <string name="http_client_agent">Android Weather Information Agent</string>
+    <string name="uri_api_weather_today" translatable="false">http://api.openweathermap.org/data/{0}/weather?lat={1}&amp;lon={2}&amp;cnt=1</string>
+    <string name="uri_api_weather_forecast" translatable="false">http://api.openweathermap.org/data/{0}/forecast/daily?lat={1}&amp;lon={2}&amp;cnt={3}&amp;mode=json</string>
+    <string name="api_version" translatable="false">2.5</string>
+    <string name="application_source_code_url" translatable="false">https://github.com/gumartinm/AndroidWeatherInformation</string>
+    <string name="my_url" translatable="false">http://gumartinm.name</string>
+    <string name="openweathermap_url" translatable="false">http://openweathermap.org/</string>
+    <string name="http_client_agent" translatable="false">Android Weather Information Agent</string>
 </resources>
