@@ -19,7 +19,7 @@
     <group android:checkableBehavior="single">
 
         <item android:id="@+id/weather_menu_map"
-            android:icon="@drawable/ic_action_map"
+            android:icon="@drawable/ic_add_location_white_24dp"
             android:visible="true"
             android:enabled="true"
             android:checked="false"
@@ -27,7 +27,7 @@
             android:titleCondensed="@string/weather_map_action_map">
         </item>
         <item android:id="@+id/weather_menu_settings"
-            android:icon="@drawable/ic_action_settings"
+            android:icon="@drawable/ic_settings_white_24dp"
             android:title="@string/weather_preferences_action_settings"
             android:titleCondensed="@string/weather_preferences_action_settings"
             android:checked="false"
