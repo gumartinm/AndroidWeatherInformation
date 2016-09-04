@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2014 Gustavo Martin Morcuende
+    Copyright 2016 Gustavo Martin Morcuende
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -21,16 +21,15 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="name.gumartinm.weather.information.activity.SpecificActivity"
+    tools:context="name.gumartinm.weather.information.activity.PreferencesActivity"
     tools:ignore="MergeRootFrame" >
 
-     <include layout="@layout/weather_general_toolbar"/>
+    <include layout="@layout/weather_general_toolbar"/>
 
-     <fragment
+    <fragment
         android:id="@+id/specific_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/weather_specific_fragment"
-        class="name.gumartinm.weather.information.fragment.specific.SpecificFragment" />
+        class="name.gumartinm.weather.information.fragment.preferences.PreferencesFragment" />
 
 </LinearLayout>

@@ -18,26 +18,24 @@ package name.gumartinm.weather.information.activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import name.gumartinm.weather.information.R;
-import name.gumartinm.weather.information.fragment.preferences.PreferencesFragment;
 
 public class PreferencesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.weather_preferences);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.weather_main_toolbar);
+        this.setSupportActionBar(toolbar);
 
         final ActionBar actionBar = this.getSupportActionBar();
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.drawable.ic_launcher);
-
-        this.getFragmentManager()
-        .beginTransaction()
-        .replace(android.R.id.content,
-                new PreferencesFragment()).commit();
     }
 
     @Override

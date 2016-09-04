@@ -18,6 +18,7 @@ package name.gumartinm.weather.information.activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import java.text.MessageFormat;
 import java.util.Locale;
@@ -33,8 +34,10 @@ public class SpecificActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.weather_specific);
 
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.weather_main_toolbar);
+        this.setSupportActionBar(toolbar);
+
         final ActionBar actionBar = this.getSupportActionBar();
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.drawable.ic_launcher);
