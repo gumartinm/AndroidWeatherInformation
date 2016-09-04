@@ -47,6 +47,13 @@ In the forecast window, just select one day and Weather Information will provide
 ![forecasth_chosen_day](screenshots/forecast_chosen_day.png)
 
 
+## Sliding menu
+
+When showing the forecast or current conditions tap on the icon located at the start of the toolbar or just swipe the screen from left edge to right.
+
+![sliding_menu](screenshots/drawer_view.png)
+
+
 ## Pick your location
 
 Using the map included in this application you can mark your chosen location in an easy way. If location access is available just press the *Get Location* button and Weather Information will pick your current location for you.
