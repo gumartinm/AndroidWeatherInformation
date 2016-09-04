@@ -15,9 +15,13 @@
     limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    tools:context="name.gumartinm.weather.information.activity.LicensesActivity">
+
+    <include layout="@layout/weather_general_toolbar"/>
 
     <WebView android:id="@+id/weather_licenses"
         android:layout_width="match_parent"

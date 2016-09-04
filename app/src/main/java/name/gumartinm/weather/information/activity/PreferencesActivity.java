@@ -35,7 +35,6 @@ public class PreferencesActivity extends AppCompatActivity {
         final ActionBar actionBar = this.getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.drawable.ic_launcher);
     }
 
     @Override

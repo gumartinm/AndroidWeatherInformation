@@ -80,8 +80,7 @@ public class MapActivity extends AppCompatActivity implements
         final ActionBar actionBar = this.getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setIcon(R.drawable.ic_launcher);
-        
+
         // Acquire a reference to the system Location Manager
         this.mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         
