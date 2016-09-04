@@ -142,7 +142,7 @@
     <string name="title_activity_about">About</string>
     <string name="weather_about_action">About</string>
     <string name="weather_about_application">APPLICATION</string>
-    <string name="weather_about_application_version">Version 1.1</string>
+    <string name="weather_about_application_version">Version 2.0</string>
     <string name="weather_about_application_legal">Legal information</string>
     <string name="weather_about_application_source_code">Source code</string>
     <string name="weather_about_application_remote_data">WEATHER DATA</string>
