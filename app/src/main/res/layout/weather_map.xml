@@ -22,13 +22,13 @@
     android:layout_gravity="center"
     tools:context="name.gumartinm.weather.information.activity.MapActivity" >
 
+	<include layout="@layout/weather_general_toolbar"/>
+
     <LinearLayout
         android:id="@+id/weather_map_citycountry_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-		android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" >
+		android:layout_below="@+id/weather_main_toolbar" >
     	<LinearLayout
         	android:id="@+id/weather_map_city_container"
         	android:layout_width="0dp"

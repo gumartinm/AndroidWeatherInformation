@@ -28,6 +28,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -73,8 +74,10 @@ public class MapActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.weather_map);
 
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.weather_main_toolbar);
+        this.setSupportActionBar(toolbar);
+
         final ActionBar actionBar = this.getSupportActionBar();
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.drawable.ic_launcher);
