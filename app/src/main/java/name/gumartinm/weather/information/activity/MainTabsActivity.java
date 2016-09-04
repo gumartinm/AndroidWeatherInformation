@@ -150,14 +150,14 @@ public class MainTabsActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
+    protected void onPostCreate(final Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
+
         mDrawerToggle.syncState();
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(final Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         this.mDrawerToggle.onConfigurationChanged(newConfig);
@@ -165,9 +165,8 @@ public class MainTabsActivity extends AppCompatActivity {
 
     /* Called whenever we call invalidateOptionsMenu() */
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = this.mDrawerLayout.isDrawerOpen(this.mNavigationView);
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        final boolean drawerOpen = this.mDrawerLayout.isDrawerOpen(this.mNavigationView);
         if (!drawerOpen) {
             this.mToolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         }
@@ -176,8 +175,6 @@ public class MainTabsActivity extends AppCompatActivity {
     }
 
     private ActionBarDrawerToggle doDrawerToggle(final DrawerLayout drawerLayout, final Toolbar toolbar) {
-        // ActionBarDrawerToggle ties together the the proper interactions
-        // between the sliding drawer and the action bar app icon
         return new ActionBarDrawerToggle(
                 this,
                 drawerLayout,
@@ -225,28 +222,22 @@ public class MainTabsActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
-            //Checking if the item is in checked state or not, if not make it in checked state
-            if(item.isChecked()) {
-                item.setChecked(false);
-            }
+            item.setChecked(false);
 
             final int itemId = item.getItemId();
             if (itemId == R.id.weather_menu_settings) {
-                //Closing drawer on item click
                 MainTabsActivity.this.mDrawerLayout.closeDrawers();
-                Intent intent = new Intent(MainTabsActivity.this.getApplicationContext(), PreferencesActivity.class);
+                final Intent intent = new Intent(MainTabsActivity.this.getApplicationContext(), PreferencesActivity.class);
                 MainTabsActivity.this.startActivity(intent);
                 return true;
             } else if (itemId == R.id.weather_menu_map) {
-                //Closing drawer on item click
                 MainTabsActivity.this.mDrawerLayout.closeDrawers();
-                Intent intent = new Intent(MainTabsActivity.this.getApplicationContext(), MapActivity.class);
+                final Intent intent = new Intent(MainTabsActivity.this.getApplicationContext(), MapActivity.class);
                 MainTabsActivity.this.startActivity(intent);
                 return true;
             } else if (itemId == R.id.weather_menu_about) {
-                //Closing drawer on item click
                 MainTabsActivity.this.mDrawerLayout.closeDrawers();
-                Intent intent = new Intent(MainTabsActivity.this.getApplicationContext(), AboutActivity.class);
+                final Intent intent = new Intent(MainTabsActivity.this.getApplicationContext(), AboutActivity.class);
                 MainTabsActivity.this.startActivity(intent);
                 return true;
             } else {

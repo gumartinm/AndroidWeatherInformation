@@ -16,8 +16,6 @@
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-
         <item android:id="@+id/weather_menu_map"
             android:icon="@drawable/ic_add_location_white_24dp"
             android:visible="true"
@@ -44,6 +42,5 @@
             android:titleCondensed="@string/weather_about_action">
         </item>
 
-    </group>
 
 </menu>
