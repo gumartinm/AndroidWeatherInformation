@@ -64,18 +64,6 @@ It applies to the following files in any path of this project:
  * weather_storm.png
 
 
-## Java code from [Apache HttpClient 3.X](http://hc.apache.org/httpclient-3.x/)
-
-This application is using code from **Apache HttpClient 3.X**. We include the license in:
-
- - app/src/main/assets/apache-http-client-license.txt
-
-It applies to the following files:
-
- * Consts.java
- * ContentType.java
-
-
 ## Files from The Android Open Source Project
 
 This application makes use of **appwidget_dark_bg.9.png** file, which comes from
@@ -84,7 +72,22 @@ The Android Open Source Project. The license can be found in this path:
  - app/src/main/assets/google-widget-dark-license.txt
 
 
-## [Google Play Services](https://developer.android.com/google/play-services/index.html)
+## Material icons - Google Design
+
+Also using [Material icons](https://design.google.com/icons/), which are licensed under the
+Apache License, Version 2.0. The license is located in the following path:
+
+ - app/src/main/assets/material-icons-google-design.txt
+
+It applies to the following files in any path of this project:
+
+ * ic_add_location_white_24dp.png
+ * ic_menu_white_24dp.png
+ * ic_perm_device_information_white_24dp.png
+ * ic_settings_white_24dp.png
+
+
+## [Google Play Services](https://developers.google.com/android/guides/overview)
 
 Weather Information uses the Google Play Services API and libraries.
 
