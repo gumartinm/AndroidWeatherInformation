@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import name.gumartinm.weather.information.R;
@@ -31,8 +32,10 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.weather_about);
 
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.weather_main_toolbar);
+        this.setSupportActionBar(toolbar);
+
         final ActionBar actionBar = this.getSupportActionBar();
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE, ActionBar.DISPLAY_SHOW_TITLE);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.drawable.ic_launcher);

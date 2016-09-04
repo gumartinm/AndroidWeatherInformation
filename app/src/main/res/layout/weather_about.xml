@@ -14,118 +14,130 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- The main content view -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="0dip"
+    android:gravity="center_horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <include layout="@layout/weather_general_toolbar"/>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/icon_weather_description"
-            android:orientation="horizontal"
-            android:src="@drawable/ic_launcher" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/weather_about_application"
-            android:textColor="?android:attr/colorForeground"
-            android:padding="5dp"
-            android:layout_gravity="start" />
-        <View style="@style/Divider"
-            android:layout_height="2dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@string/icon_weather_description"
+                android:orientation="horizontal"
+                android:src="@drawable/ic_launcher" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/weather_about_application_version"
-            android:padding="20dp"
-            android:layout_gravity="start" />
-        <View style="@style/Divider"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/weather_about_application"
+                android:textColor="?android:attr/colorForeground"
+                android:padding="5dp"
+                android:layout_gravity="start" />
+            <View style="@style/Divider"
+                android:layout_height="2dp"/>
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/weather_about_application_legal"
-            android:padding="20dp"
-            android:layout_gravity="start"
-            android:clickable="true"
-            android:background="?android:attr/selectableItemBackground"
-            android:onClick="onClickLegalInformation"/>
-        <View style="@style/Divider"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/weather_about_application_version"
+                android:padding="20dp"
+                android:layout_gravity="start" />
+            <View style="@style/Divider"/>
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/weather_about_application_source_code"
-            android:padding="20dp"
-            android:layout_gravity="start"
-            android:clickable="true"
-            android:background="?android:attr/selectableItemBackground"
-            android:onClick="onClickSourceCode"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/weather_about_application_legal"
+                android:padding="20dp"
+                android:layout_gravity="start"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:onClick="onClickLegalInformation"/>
+            <View style="@style/Divider"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/weather_about_application_remote_data"
-            android:textColor="?android:attr/colorForeground"
-            android:padding="5dp"
-            android:layout_gravity="start" />
-        <View style="@style/Divider"
-            android:layout_height="2dp"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/weather_about_application_source_code"
+                android:padding="20dp"
+                android:layout_gravity="start"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:onClick="onClickSourceCode"/>
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/weather_about_application_remote_data_openweathermap"
-            android:padding="20dp"
-            android:layout_gravity="start"
-            android:clickable="true"
-            android:background="?android:attr/selectableItemBackground"
-            android:onClick="onClickRemoteData"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/weather_about_application_remote_data"
+                android:textColor="?android:attr/colorForeground"
+                android:padding="5dp"
+                android:layout_gravity="start" />
+            <View style="@style/Divider"
+                android:layout_height="2dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/weather_about_application_developer"
-            android:textColor="?android:attr/colorForeground"
-            android:padding="5dp"
-            android:layout_gravity="start" />
-        <View style="@style/Divider"
-            android:layout_height="2dp"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/weather_about_application_remote_data_openweathermap"
+                android:padding="20dp"
+                android:layout_gravity="start"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:onClick="onClickRemoteData"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/weather_about_application_developer_name"
-            android:padding="20dp"
-            android:layout_gravity="start" />
-        <View style="@style/Divider"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/weather_about_application_developer"
+                android:textColor="?android:attr/colorForeground"
+                android:padding="5dp"
+                android:layout_gravity="start" />
+            <View style="@style/Divider"
+                android:layout_height="2dp"/>
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/weather_about_application_developer_web"
-            android:padding="20dp"
-            android:layout_gravity="start"
-            android:clickable="true"
-            android:background="?android:attr/selectableItemBackground"
-            android:onClick="onClickMyWeb"/>
-        <View style="@style/Divider"/>
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/weather_about_application_developer_name"
+                android:padding="20dp"
+                android:layout_gravity="start" />
+            <View style="@style/Divider"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/weather_about_application_developer_web"
+                android:padding="20dp"
+                android:layout_gravity="start"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:onClick="onClickMyWeb"/>
+            <View style="@style/Divider"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

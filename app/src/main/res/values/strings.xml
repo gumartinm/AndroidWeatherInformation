@@ -160,6 +160,8 @@
     <string name="weather_preferences_day_forecast_five_day">5</string>
     <string name="weather_preferences_day_forecast_ten_day">10</string>
     <string name="weather_preferences_day_forecast_fourteen_day">14</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
 
     <!-- BootReceiver -->
